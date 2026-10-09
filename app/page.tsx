@@ -73,30 +73,97 @@ function Countdown() {
 }
 
 function Entry({ onEnter }: { onEnter: () => void }) {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(
+      () => setIndex((i) => (i + 1) % wedding.heroImages.length),
+      6000,
+    );
+    return () => clearInterval(timer);
+  }, []);
   return (
-    <main className="entry-screen">
-      <div className="entry-copy">
-        <p className="eyebrow">A wedding invitation</p>
+    <section className="hero" id="top">
+      <div className="hero-image">
+        <Image
+          src="/images/image-one.jpg"
+          alt="A moment from Seun and Benjamin's wedding"
+          fill
+          priority
+          sizes="100vw"
+        />
+      </div>
+      <div className="hero-overlay" />
+      <div className="hero-content">
+        <p className="eyebrow">Countdown to a beautiful beginning</p>
+        <p className="eyebrow">Circle the date in your calendar</p>
+        <p className="eyebrow">#benspleasantness</p>
         <h1>
-          Naomi <i>&</i> Benjamin
+          Seun <i>&</i>
+          <br />
+          Benjamin
         </h1>
-        <p className="entry-date">05.11.26 · Lagos, Nigeria</p>
+        <p className="hero-date">November 5th · Lagos, Nigeria</p>
+        <Countdown />
         <button className="text-button" onClick={onEnter}>
           Enter invitation <ArrowRight size={15} />
         </button>
       </div>
-      <div className="entry-image">
-        <Image
-          src={wedding.heroImages[0]}
-          alt="A romantic wedding portrait"
-          fill
-          priority
-          sizes="50vw"
-        />
-      </div>
-    </main>
+      {/* <div className="hero-footer">
+        <span>Scroll to explore</span>
+        <ArrowDown size={16} />
+        <div className="slider-controls">
+          <button
+            aria-label="Previous photo"
+            onClick={() =>
+              setIndex(
+                (i) =>
+                  (i + wedding.heroImages.length - 1) %
+                  wedding.heroImages.length,
+              )
+            }
+          >
+            ←
+          </button>
+          <span>
+            0{index + 1} <b>/ 0{wedding.heroImages.length}</b>
+          </span>
+          <button
+            aria-label="Next photo"
+            onClick={() => setIndex((i) => (i + 1) % wedding.heroImages.length)}
+          >
+            →
+          </button>
+        </div>
+      </div> */}
+    </section>
   );
 }
+
+// function Entry({ onEnter }: { onEnter: () => void }) {
+//   return (
+//     <main className="entry-screen">
+//       <div className="entry-copy">
+//         <p className="eyebrow">A wedding invitation</p>
+//         <h1>
+//           Seun <i>&</i> Benjamin
+//         </h1>
+//         <p className="entry-date">05.11.26 · Lagos, Nigeria</p>
+//         <button className="text-button" onClick={onEnter}>
+//           Enter invitation <ArrowRight size={15} />
+//         </button>
+//       </div>
+//       <div className="entry-image">
+//         <Image
+//           src='/images/image-one.jpg'
+//           alt="A romantic wedding portrait"
+//           fill
+//           priority
+//           sizes="50vw"
+//         />
+//       </div>
+//     </main>
+//   );
+// }
 
 function Header({ onMenu }: { onMenu: () => void }) {
   return (
@@ -132,7 +199,7 @@ function Hero() {
       <div className="hero-image">
         <Image
           src={wedding.heroImages[index]}
-          alt="A moment from Naomi and Benjamin's wedding"
+          alt="A moment from Seun and Benjamin's wedding"
           fill
           priority
           sizes="100vw"
@@ -142,7 +209,7 @@ function Hero() {
       <div className="hero-content">
         <p className="eyebrow">Together with their families</p>
         <h1>
-          Naomi <i>&</i>
+          Seun <i>&</i>
           <br />
           Benjamin
         </h1>
@@ -636,7 +703,7 @@ export default function Page() {
         <RSVP />
         <footer>
           <Heart size={17} fill="currentColor" />
-          <p>With love, Naomi & Benjamin</p>
+          <p>With love, Seun & Benjamin</p>
           <a href="#top">
             Back to top <ChevronDown size={15} />
           </a>

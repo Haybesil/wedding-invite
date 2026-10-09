@@ -1,5 +1,5 @@
 export const wedding = {
-  couple: "Naomi & Benjamin",
+  couple: "Seun & Benjamin",
   date: "Thursday, November 5, 2026",
   shortDate: "05.11.26",
   time: "1:00 PM prompt",
@@ -51,7 +51,7 @@ export const ceremony = [
   ["01", "Chairman", "Brother Jonathan Hanson"],
   ["02", "Opening Prayer", "Brother Koukoui Theophile"],
   ["03", "Wedding Talk", "Brother Gideon Ataraire — Officiating Minister"],
-  ["04", "Exchange of Vows", "Naomi & Benjamin"],
+  ["04", "Exchange of Vows", "Seun & Benjamin"],
   ["05", "Signing of Marriage Documents", "The official moment"],
   ["06", "Closing Prayer", "Brother Samuel Ajie"],
 ];
