@@ -15,5 +15,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { colorScheme: 'light', themeColor: '#f4f0e9' }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}><body className="antialiased">{children}{process.env.NODE_ENV === 'production' && <Analytics />}</body></html>
+  return <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}><body className="m-0 bg-background font-sans text-foreground antialiased">{children}{process.env.NODE_ENV === 'production' && <Analytics />}</body></html>
 }
