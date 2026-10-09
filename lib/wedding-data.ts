@@ -12,6 +12,16 @@ export const wedding = {
     "/images/image-two.jpg",
     "/images/image-six.jpg",
   ],
+
+  galleryImages: [
+    "/images/image-five.JPG",
+    "/images/image-two.jpg",
+    "/images/image-six.jpg",
+    "/images/image-one.jpg",
+    "/images/image-three.jpg",
+    "/images/image-four.jpg",
+    "/images/image-seven.jpg",
+  ],
   gallery: [
     {
       src: "/images/image-one.jpg",

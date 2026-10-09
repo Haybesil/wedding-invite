@@ -247,12 +247,99 @@ function Hero() {
             ←
           </button>
           <span>
-            0{index + 1} <b className="font-normal">/ 0{wedding.heroImages.length}</b>
+            0{index + 1}{" "}
+            <b className="font-normal">/ 0{wedding.heroImages.length}</b>
           </span>
           <button
             aria-label="Next photo"
             className="grid size-8 place-items-center rounded-full border border-[#bcb4aa] bg-transparent text-inherit"
             onClick={() => setIndex((i) => (i + 1) % wedding.heroImages.length)}
+          >
+            →
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function GalleryArea() {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(
+      () => setIndex((i) => (i + 1) % wedding.heroImages.length),
+      6000,
+    );
+    return () => clearInterval(timer);
+  }, []);
+  return (
+    <section
+      className="relative flex min-h-svh items-center justify-center overflow-hidden bg-[#282026] text-cream"
+      id="top"
+    >
+      <div className="absolute inset-0">
+        {wedding.galleryImages.map((src, i) => (
+          <Image
+            key={src}
+            src={src}
+            alt="A moment from Seun and Benjamin's wedding"
+            fill
+            priority={i === 0}
+            sizes="100vw"
+            className={`object-contain object-center saturate-[0.72] transition-opacity duration-500 ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+      {/* <div className="absolute inset-0 bg-linear-to-b from-[#230c13]/28 via-[#230c13]/18 to-[#230c13]/78" /> */}
+      {/* <div className="relative z-1 px-6 py-24 text-center md:px-10">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#eee0d9]">
+          A sacred union
+        </p>
+        <h1 className="mb-6 font-serif text-[5rem] leading-[0.76] font-normal tracking-[-0.04em] md:text-[clamp(5rem,13vw,13rem)]">
+          You&apos;re
+          <br />
+          <i className="font-normal text-accent">invited.</i>
+        </h1>
+        <p className="mx-auto mb-5 max-w-md text-[0.95rem] leading-7 text-[#eee0d9]">
+          Join our families as we begin this beautiful chapter of love and faith
+          before Jehovah.
+        </p>
+        <p className="text-[0.72rem] uppercase tracking-[0.24em]">
+          Thursday · 1:00 PM prompt
+        </p>
+        <p className="mt-3 text-[0.72rem] uppercase tracking-[0.18em] text-[#decfc9]">
+          Kingdom Hall of Jehovah&apos;s Witnesses
+        </p>
+      </div> */}
+      <div className="absolute right-[4vw] bottom-8 left-[4vw] flex items-center justify-between text-[0.62rem] uppercase tracking-[0.14em]">
+        <span className="hidden items-center gap-2 md:inline-flex">
+          Scroll to explore
+        </span>
+        <ArrowDown size={16} className="hidden md:block" />
+        <div className="ml-auto flex items-center gap-5">
+          <button
+            aria-label="Previous photo"
+            className="grid size-8 place-items-center rounded-full border border-[#bcb4aa] bg-transparent text-inherit"
+            onClick={() =>
+              setIndex(
+                (i) =>
+                  (i + wedding.galleryImages.length - 1) %
+                  wedding.galleryImages.length,
+              )
+            }
+          >
+            ←
+          </button>
+          <span>
+            0{index + 1}{" "}
+            <b className="font-normal">/ 0{wedding.galleryImages.length}</b>
+          </span>
+          <button
+            aria-label="Next photo"
+            className="grid size-8 place-items-center rounded-full border border-[#bcb4aa] bg-transparent text-inherit"
+            onClick={() => setIndex((i) => (i + 1) % wedding.galleryImages.length)}
           >
             →
           </button>
@@ -303,7 +390,10 @@ function Invitation() {
 
 function Details() {
   return (
-    <section className="bg-[#eee4db] px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]" id="details">
+    <section
+      className="bg-[#eee4db] px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]"
+      id="details"
+    >
       <div className="max-w-[650px]">
         <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
           The wedding details
@@ -390,7 +480,9 @@ function Ceremony() {
             className="grid grid-cols-[55px_1fr] gap-4 border-t border-[#d6c9be] py-7 md:grid-cols-[100px_1fr] md:gap-8"
             key={number}
           >
-            <span className="font-serif text-2xl text-accent italic">{number}</span>
+            <span className="font-serif text-2xl text-accent italic">
+              {number}
+            </span>
             <div>
               <h3 className="mb-1 font-serif text-[1.55rem] font-normal tracking-[-0.04em]">
                 {title}
@@ -821,8 +913,9 @@ export default function Page() {
       <Header onMenu={() => setMenu(true)} />
       {menu && <MobileMenu close={() => setMenu(false)} />}
       <main>
-        <Hero />
+        {/* <Hero /> */}
         <Invitation />
+        <GalleryArea />
         <Details />
         <Ceremony />
         <BridalParty />
