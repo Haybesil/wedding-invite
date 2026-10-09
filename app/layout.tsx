@@ -7,13 +7,13 @@ const cormorant = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-cor
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
-  title: 'Naomi & Benjamin — 14.09.25',
-  description: 'The wedding invitation of Naomi and Benjamin.',
+  title: 'Seun & Benjamin — 14.09.25',
+  description: 'The wedding invitation of Seun and Benjamin.',
   generator: 'v0.app',
 }
 
 export const viewport: Viewport = { colorScheme: 'light', themeColor: '#f4f0e9' }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}><body className="antialiased">{children}{process.env.NODE_ENV === 'production' && <Analytics />}</body></html>
+  return <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}><body className="m-0 bg-background font-sans text-foreground antialiased">{children}{process.env.NODE_ENV === 'production' && <Analytics />}</body></html>
 }

@@ -4,12 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
-  CalendarDays,
   Check,
   ChevronDown,
   Clock3,
   Heart,
-  MapPin,
   Menu,
   X,
 } from "lucide-react";
@@ -51,67 +49,128 @@ function Countdown() {
     ];
   }, [now]);
   return (
-    <div className="countdown" aria-label="Countdown to the wedding">
-      <div>
-        <strong>{String(values[0]).padStart(2, "0")}</strong>
-        <span>Days</span>
-      </div>
-      <div>
-        <strong>{String(values[1]).padStart(2, "0")}</strong>
-        <span>Hours</span>
-      </div>
-      <div>
-        <strong>{String(values[2]).padStart(2, "0")}</strong>
-        <span>Minutes</span>
-      </div>
-      <div>
-        <strong>{String(values[3]).padStart(2, "0")}</strong>
-        <span>Seconds</span>
-      </div>
+    <div
+      className="mt-10 flex justify-center gap-1.5 md:gap-2"
+      aria-label="Countdown to the wedding"
+    >
+      {[
+        [values[0], "Days"],
+        [values[1], "Hours"],
+        [values[2], "Minutes"],
+        [values[3], "Seconds"],
+      ].map(([value, label]) => (
+        <div
+          key={String(label)}
+          className="grid min-w-[4.4rem] rounded-[0.55rem] border border-cream/28 bg-ink/25 px-1.5 py-2.5 backdrop-blur-[5px] md:min-w-[5.8rem] md:px-2.5 md:py-3.5"
+        >
+          <strong className="font-serif text-[1.55rem] font-normal md:text-[2rem]">
+            {String(value).padStart(2, "0")}
+          </strong>
+          <span className="text-[0.47rem] uppercase tracking-[0.1em] text-[#decfc9] md:text-[0.58rem] md:tracking-[0.18em]">
+            {label}
+          </span>
+        </div>
+      ))}
     </div>
+  );
+}
+
+function CurvedHashtag() {
+  return (
+    <svg
+      viewBox="0 0 520 96"
+      className="mx-auto mb-1 h-auto w-[min(92vw,30rem)] overflow-visible"
+      role="img"
+      aria-label="#benspleasantness"
+    >
+      <defs>
+        <path
+          id="hashtag-curve"
+          d="M 24 78 C 150 6, 370 6, 496 78"
+          fill="none"
+        />
+      </defs>
+      <text
+        fill="#eee0d9"
+        fontSize="15"
+        letterSpacing="5"
+        style={{
+          fontFamily: "var(--font-inter), sans-serif",
+          textTransform: "uppercase",
+        }}
+      >
+        <textPath href="#hashtag-curve" startOffset="50%" textAnchor="middle">
+          #benspleasantness
+        </textPath>
+      </text>
+    </svg>
   );
 }
 
 function Entry({ onEnter }: { onEnter: () => void }) {
   return (
-    <main className="entry-screen">
-      <div className="entry-copy">
-        <p className="eyebrow">A wedding invitation</p>
-        <h1>
-          Naomi <i>&</i> Benjamin
+    <section className="relative flex min-h-svh items-center justify-center overflow-hidden bg-[#282026] text-cream">
+      <div className="absolute inset-0">
+        <Image
+          src="/images/image-one.jpg"
+          alt="A moment from Seun and Benjamin's wedding"
+          fill
+          priority
+          sizes="100vw"
+          className="object-contain object-center saturate-[0.72]"
+        />
+      </div>
+      <div className="absolute inset-0 bg-linear-to-b from-[#230c13]/28 via-[#230c13]/18 to-[#230c13]/78" />
+      <div className="relative z-1 px-6 py-16 text-center md:px-10">
+        <p className="mb-3 text-[0.68rem] uppercase tracking-[0.28em] text-[#eee0d9]">
+          Countdown to a beautiful beginning
+        </p>
+        <p className="mb-2 text-[0.68rem] uppercase tracking-[0.28em] text-[#eee0d9]">
+          Circle the date in your calendar
+        </p>
+        <CurvedHashtag />
+        <h1 className="mb-6 font-serif text-[5rem] leading-[0.76] font-normal tracking-[-0.04em] md:text-[clamp(5rem,13vw,13rem)]">
+          Seun <i className="text-accent not-italic">&</i>
+          <br />
+          Benjamin
         </h1>
-        <p className="entry-date">05.11.26 · Lagos, Nigeria</p>
-        <button className="text-button" onClick={onEnter}>
+        <p className="text-[0.72rem] uppercase tracking-[0.24em]">
+          November 5th · Lagos, Nigeria
+        </p>
+        <Countdown />
+        <button
+          className="mt-12 inline-flex items-center gap-2.5 border-0 border-b border-current bg-transparent py-3 text-[0.74rem] uppercase tracking-[0.12em] text-cream"
+          onClick={onEnter}
+        >
           Enter invitation <ArrowRight size={15} />
         </button>
       </div>
-      <div className="entry-image">
-        <Image
-          src={wedding.heroImages[0]}
-          alt="A romantic wedding portrait"
-          fill
-          priority
-          sizes="50vw"
-        />
-      </div>
-    </main>
+    </section>
   );
 }
 
 function Header({ onMenu }: { onMenu: () => void }) {
   return (
-    <header className="site-header">
-      <a href="#top" className="brand">
-        N<span>&</span>B
+    <header className="fixed z-10 flex w-full items-center justify-between px-[6vw] py-5 text-cream mix-blend-difference md:px-[4vw] md:py-6">
+      <a href="#top" className="font-serif text-[1.8rem] tracking-[-0.1em]">
+        S<span className="mx-[0.08em] text-accent">&</span>B
       </a>
-      <nav>
+      <nav className="hidden gap-6 md:flex">
         {navItems.map((item) => (
-          <a key={item} href={`#${item.toLowerCase().replace(" ", "-")}`}>
+          <a
+            key={item}
+            href={`#${item.toLowerCase().replace(" ", "-")}`}
+            className="text-[0.62rem] uppercase tracking-[0.13em] no-underline"
+          >
             {item}
           </a>
         ))}
       </nav>
-      <button aria-label="Open menu" className="menu-button" onClick={onMenu}>
+      <button
+        aria-label="Open menu"
+        className="border-0 bg-transparent text-inherit md:hidden"
+        onClick={onMenu}
+      >
         <Menu size={22} />
       </button>
     </header>
@@ -128,33 +187,55 @@ function Hero() {
     return () => clearInterval(timer);
   }, []);
   return (
-    <section className="hero" id="top">
-      <div className="hero-image">
-        <Image
-          src={wedding.heroImages[index]}
-          alt="A moment from Naomi and Benjamin's wedding"
-          fill
-          priority
-          sizes="100vw"
-        />
+    <section
+      className="relative flex min-h-svh items-center justify-center overflow-hidden bg-[#282026] text-cream"
+      id="top"
+    >
+      <div className="absolute inset-0">
+        {wedding.heroImages.map((src, i) => (
+          <Image
+            key={src}
+            src={src}
+            alt="A moment from Seun and Benjamin's wedding"
+            fill
+            priority={i === 0}
+            sizes="100vw"
+            className={`object-contain object-center saturate-[0.72] transition-opacity duration-500 ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
       </div>
-      <div className="hero-overlay" />
-      <div className="hero-content">
-        <p className="eyebrow">Together with their families</p>
-        <h1>
-          Naomi <i>&</i>
+      <div className="absolute inset-0 bg-linear-to-b from-[#230c13]/28 via-[#230c13]/18 to-[#230c13]/78" />
+      <div className="relative z-1 px-6 py-24 text-center md:px-10">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#eee0d9]">
+          A sacred union
+        </p>
+        <h1 className="mb-6 font-serif text-[5rem] leading-[0.76] font-normal tracking-[-0.04em] md:text-[clamp(5rem,13vw,13rem)]">
+          You&apos;re
           <br />
-          Benjamin
+          <i className="font-normal text-accent">invited.</i>
         </h1>
-        <p className="hero-date">November 5th · Lagos, Nigeria</p>
-        <Countdown />
+        <p className="mx-auto mb-5 max-w-md text-[0.95rem] leading-7 text-[#eee0d9]">
+          Join our families as we begin this beautiful chapter of love and faith
+          before Jehovah.
+        </p>
+        <p className="text-[0.72rem] uppercase tracking-[0.24em]">
+          Thursday · 1:00 PM prompt
+        </p>
+        <p className="mt-3 text-[0.72rem] uppercase tracking-[0.18em] text-[#decfc9]">
+          Kingdom Hall of Jehovah&apos;s Witnesses
+        </p>
       </div>
-      <div className="hero-footer">
-        <span>Scroll to explore</span>
-        <ArrowDown size={16} />
-        <div className="slider-controls">
+      <div className="absolute right-[4vw] bottom-8 left-[4vw] flex items-center justify-between text-[0.62rem] uppercase tracking-[0.14em]">
+        <span className="hidden items-center gap-2 md:inline-flex">
+          Scroll to explore
+        </span>
+        <ArrowDown size={16} className="hidden md:block" />
+        <div className="ml-auto flex items-center gap-5">
           <button
             aria-label="Previous photo"
+            className="grid size-8 place-items-center rounded-full border border-[#bcb4aa] bg-transparent text-inherit"
             onClick={() =>
               setIndex(
                 (i) =>
@@ -166,10 +247,11 @@ function Hero() {
             ←
           </button>
           <span>
-            0{index + 1} <b>/ 0{wedding.heroImages.length}</b>
+            0{index + 1} <b className="font-normal">/ 0{wedding.heroImages.length}</b>
           </span>
           <button
             aria-label="Next photo"
+            className="grid size-8 place-items-center rounded-full border border-[#bcb4aa] bg-transparent text-inherit"
             onClick={() => setIndex((i) => (i + 1) % wedding.heroImages.length)}
           >
             →
@@ -182,31 +264,37 @@ function Hero() {
 
 function Invitation() {
   return (
-    <section className="section invitation" id="invitation">
-      <div className="section-intro">
-        <p className="eyebrow">An invitation</p>
-        <h2>
-          Together with
+    <section
+      className="grid min-h-0 items-center gap-16 px-[8vw] py-[24vw] md:min-h-[85vh] md:grid-cols-2 md:gap-[8vw] md:px-[10vw] md:py-[12vw]"
+      id="invitation"
+    >
+      <div>
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
+          An invitation
+        </p>
+        <h2 className="font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
+          <span className="whitespace-nowrap">DEAR FAMILY</span>
           <br />
-          <i>our families.</i>
+          &
+          <br />
+          <i className="font-normal text-accent">FRIENDS.</i>
         </h2>
       </div>
-      <div className="invitation-copy">
-        <p className="lead">
-          We joyfully invite you to share in the celebration of our love as we
-          begin forever together.
+      <div className="max-w-[470px]">
+        <p className="font-serif text-[clamp(2rem,3vw,3.2rem)] leading-[1.05]">
+          Some moments become more beautiful when shared with the people who
+          matter most
         </p>
-        <p>
-          What started as a simple moment has blossomed into a story of
-          friendship, faith, and love. We are so honored to have you be part of
-          it.
+        <p className="text-[0.9rem] leading-[1.7] text-muted-foreground">
+          We , together with our families warmly invite you to share in the joy
+          of our wedding and witness the beginning of this beautiful chapter of
+          our lives.
         </p>
-        <div className="ornament">
+        <div className="my-10 flex items-center gap-4 text-accent">
           — <Heart size={16} /> —
         </div>
-        <p className="script-note">
-          Your presence means the world to us — and that, above all, is what we
-          cherish most.
+        <p className="font-serif text-2xl text-muted-foreground italic">
+          Thank you for being part of our story.
         </p>
       </div>
     </section>
@@ -215,44 +303,63 @@ function Invitation() {
 
 function Details() {
   return (
-    <section className="details-section" id="details">
-      <div className="section-heading">
-        <p className="eyebrow">The wedding details</p>
-        <h2>
+    <section className="bg-[#eee4db] px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]" id="details">
+      <div className="max-w-[650px]">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
+          The wedding details
+        </p>
+        <h2 className="mb-5 font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
           A day set aside
           <br />
-          <i>for love & faith.</i>
+          <i className="font-normal text-accent">for love & faith.</i>
         </h2>
-        <p>
+        <p className="text-[0.9rem] leading-[1.7] text-muted-foreground">
           We are delighted to welcome you to our wedding ceremony holding in
           Lagos, Nigeria.
         </p>
       </div>
-      <div className="details-list">
-        <div>
-          <span>Date</span>
-          <strong>{wedding.date}</strong>
-        </div>
-        <div>
-          <span>Time</span>
-          <strong>{wedding.time}</strong>
-        </div>
-        <div>
-          <span>Venue</span>
-          <strong>{wedding.venue}</strong>
-        </div>
-        <div>
-          <span>Address</span>
-          <strong>{wedding.address}</strong>
-        </div>
+      <div className="mx-auto mt-12 max-w-[850px] md:mt-20">
+        {[
+          ["Date", wedding.date],
+          ["Time", wedding.time],
+          ["Venue", wedding.venue],
+          ["Address", wedding.address],
+        ].map(([label, value]) => (
+          <div
+            key={label}
+            className="grid grid-cols-[90px_1fr] gap-4 border-t border-[#d2c3b9] py-6 md:grid-cols-[180px_1fr] md:gap-8 md:py-6.5"
+          >
+            <span className="text-[0.68rem] uppercase tracking-[0.22em] text-wine">
+              {label}
+            </span>
+            <strong className="font-serif text-[1.25rem] leading-[1.3] font-normal md:text-[1.4rem]">
+              {value}
+            </strong>
+          </div>
+        ))}
       </div>
       <a
-        className="outline-button"
-        href="https://maps.google.com/?q=4/6+Akinyemi+Avenue+Lagos"
+        className="mt-2 inline-flex items-center gap-3 rounded-full border border-wine px-6.5 py-4 text-[0.7rem] uppercase tracking-[0.16em] no-underline"
+        href={wedding.mapsUrl}
         target="_blank"
         rel="noreferrer"
       >
         Get directions <ArrowRight size={15} />
+      </a>
+      <a
+        href={wedding.mapsUrl}
+        target="_blank"
+        rel="noreferrer"
+        className="mt-8 block overflow-hidden rounded-[1.25rem] border border-[#d2c3b9] bg-white shadow-[0_20px_60px_rgba(50,29,37,.08)] md:mt-10"
+      >
+        <Image
+          src="/map.png"
+          alt="Google Maps location of Kingdom Hall of Jehovah’s Witnesses"
+          width={3360}
+          height={1364}
+          className="h-auto w-full"
+          sizes="(max-width: 768px) 84vw, 80vw"
+        />
       </a>
     </section>
   );
@@ -260,23 +367,37 @@ function Details() {
 
 function Ceremony() {
   return (
-    <section className="ceremony-section" id="ceremony">
-      <div className="section-heading">
-        <p className="eyebrow">Order of ceremony</p>
-        <h2>
+    <section
+      className="bg-[#f2e9df] px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]"
+      id="ceremony"
+    >
+      <div className="max-w-[650px]">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
+          Order of ceremony
+        </p>
+        <h2 className="mb-5 font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
           A sacred union
           <br />
-          <i>before Jehovah.</i>
+          <i className="font-normal text-accent">before Jehovah.</i>
         </h2>
-        <p>A thoughtful order for the moments that matter most.</p>
+        <p className="text-[0.9rem] leading-[1.7] text-muted-foreground">
+          A thoughtful order for the moments that matter most.
+        </p>
       </div>
-      <div className="ceremony-list">
+      <div className="mx-auto mt-12 max-w-[850px] md:mt-20">
         {ceremony.map(([number, title, detail]) => (
-          <div className="ceremony-row" key={number}>
-            <span>{number}</span>
+          <div
+            className="grid grid-cols-[55px_1fr] gap-4 border-t border-[#d6c9be] py-7 md:grid-cols-[100px_1fr] md:gap-8"
+            key={number}
+          >
+            <span className="font-serif text-2xl text-accent italic">{number}</span>
             <div>
-              <h3>{title}</h3>
-              <p>{detail}</p>
+              <h3 className="mb-1 font-serif text-[1.55rem] font-normal tracking-[-0.04em]">
+                {title}
+              </h3>
+              <p className="m-0 text-[0.9rem] leading-[1.5] text-muted-foreground">
+                {detail}
+              </p>
             </div>
           </div>
         ))}
@@ -287,23 +408,28 @@ function Ceremony() {
 
 function BridalParty() {
   return (
-    <section className="party-section" id="bridal-party">
-      <div className="section-heading">
-        <p className="eyebrow">The bridal party</p>
-        <h2>
+    <section
+      className="px-[8vw] py-[20vw] text-center md:px-[10vw] md:py-[11vw]"
+      id="bridal-party"
+    >
+      <div className="mx-auto max-w-[650px]">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
+          The bridal party
+        </p>
+        <h2 className="mb-5 font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
           Standing with us
           <br />
-          <i>in love.</i>
+          <i className="font-normal text-accent">in love.</i>
         </h2>
-        <p>
+        <p className="text-[0.9rem] leading-[1.7] text-muted-foreground">
           We are grateful for the beautiful souls standing with us on this
           special day.
         </p>
       </div>
-      <div className="party-grid">
+      <div className="mx-auto mt-12 grid max-w-[1000px] grid-cols-2 gap-x-4 gap-y-10 md:mt-20 md:grid-cols-4 md:gap-8">
         {bridalParty.map((person) => (
-          <div className="party-card" key={person.role}>
-            <div className="initials">
+          <div className="text-center" key={person.role}>
+            <div className="mx-auto mb-6 grid size-28 place-items-center rounded-full bg-wine font-serif text-[2rem] text-cream md:size-36 md:text-[2.5rem]">
               {person.name === "Still to be announced"
                 ? "—"
                 : person.name
@@ -312,34 +438,46 @@ function BridalParty() {
                     .join("")
                     .slice(0, 2)}
             </div>
-            <h3>{person.name}</h3>
-            <p>{person.role}</p>
+            <h3 className="mb-1.5 font-serif text-[1.4rem] font-normal tracking-[-0.04em]">
+              {person.name}
+            </h3>
+            <p className="text-[0.68rem] uppercase tracking-[0.19em] text-muted-foreground">
+              {person.role}
+            </p>
           </div>
         ))}
       </div>
-      {/* <p className="party-note">
-        No bridesmaids or groomsmen — just the people we love most.
-      </p> */}
     </section>
   );
 }
 
 function Programme() {
   return (
-    <section className="programme-section">
-      <div className="section-heading">
-        <p className="eyebrow">The day</p>
-        <h2>
-          A little <i>timeline.</i>
+    <section className="bg-[#e5d9d0] px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]">
+      <div className="max-w-[650px]">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
+          The day
+        </p>
+        <h2 className="font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
+          A little <i className="font-normal text-accent">timeline.</i>
         </h2>
       </div>
-      <div className="timeline">
+      <div className="mx-auto mt-12 max-w-[850px] md:mt-20">
         {programme.map(([time, title, place]) => (
-          <div className="timeline-row" key={time}>
-            <span className="time">{time}</span>
+          <div
+            className="grid grid-cols-[88px_1fr_20px] items-center gap-4 border-t border-[#cfc0b6] py-6 md:grid-cols-[100px_1fr_20px] md:gap-8"
+            key={time}
+          >
+            <span className="text-[0.7rem] tracking-[0.12em] text-accent">
+              {time}
+            </span>
             <div>
-              <h3>{title}</h3>
-              <p>{place}</p>
+              <h3 className="mb-1 font-serif text-[1.55rem] font-normal tracking-[-0.04em]">
+                {title}
+              </h3>
+              <p className="m-0 text-[0.9rem] leading-[1.5] text-muted-foreground">
+                {place}
+              </p>
             </div>
             <Clock3 size={17} />
           </div>
@@ -356,49 +494,49 @@ function ZoomMeeting() {
 
   return (
     <section
-      className="bg-[#f8f5f0] px-8 py-24 text-center text-[#321d25] md:px-[10vw] md:py-32"
+      className="bg-background px-8 py-24 text-center text-ink md:px-[10vw] md:py-32"
       id="zoom"
     >
       <div className="mx-auto max-w-3xl">
-        <p className="mb-6 text-[.68rem] uppercase tracking-[.28em] text-[#756d6a]">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
           Unable to be there in person?
         </p>
-        <h2 className="mb-5 text-5xl leading-[.9] md:text-7xl">
-          Join us <i>online.</i>
+        <h2 className="mb-5 font-serif text-5xl leading-[0.9] font-normal tracking-[-0.04em] md:text-7xl">
+          Join us <i className="font-normal text-accent">online.</i>
         </h2>
-        <p className="mb-12 text-base leading-8 text-[#756d6a] md:text-lg">
+        <p className="mb-12 text-base leading-8 text-muted-foreground md:text-lg">
           We would love to have you celebrate with us virtually. Join us on Zoom
           as we say “I do” from wherever you are.
         </p>
-        <div className="mx-auto max-w-2xl rounded-[1.25rem] border border-[#ddd2ca] bg-white/70 px-6 py-10 shadow-[0_20px_60px_rgba(50,29,37,.06)] md:px-12">
-          <p className="mb-3 text-sm uppercase tracking-[.22em] text-[#756d6a]">
+        <div className="mx-auto max-w-2xl rounded-[1.25rem] border border-border bg-white/70 px-6 py-10 shadow-[0_20px_60px_rgba(50,29,37,.06)] md:px-12">
+          <p className="mb-3 text-sm uppercase tracking-[0.22em] text-muted-foreground">
             Wedding Zoom Meeting
           </p>
-          <p className="mb-10 text-lg text-[#9e6474]">{zoom.date}</p>
+          <p className="mb-10 text-lg text-accent">{zoom.date}</p>
           <div className="grid gap-8 md:grid-cols-2">
             <div className="rounded-xl border border-[#eee4db] px-5 py-7">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[.2em] text-[#756d6a]">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                 Meeting ID
               </p>
-              <p className="mb-5 font-mono text-xl tracking-[.16em]">
+              <p className="mb-5 font-mono text-xl tracking-[0.16em]">
                 {zoom.meetingId}
               </p>
               <button
-                className="rounded-full bg-[#d39aaa] px-6 py-2 text-xs uppercase tracking-[.18em] text-white transition hover:bg-[#b9788a]"
+                className="rounded-full bg-[#d39aaa] px-6 py-2 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-[#b9788a]"
                 onClick={() => copy(zoom.meetingId)}
               >
                 Copy
               </button>
             </div>
             <div className="rounded-xl border border-[#eee4db] px-5 py-7">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[.2em] text-[#756d6a]">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                 Passcode
               </p>
-              <p className="mb-5 font-mono text-xl tracking-[.16em]">
+              <p className="mb-5 font-mono text-xl tracking-[0.16em]">
                 {zoom.passcode}
               </p>
               <button
-                className="rounded-full bg-[#d39aaa] text-white px-6 py-2 text-xs uppercase tracking-[.18em] transition hover:bg-[#b9788a]"
+                className="rounded-full bg-[#d39aaa] px-6 py-2 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-[#b9788a]"
                 onClick={() => copy(zoom.passcode)}
               >
                 Copy
@@ -406,7 +544,7 @@ function ZoomMeeting() {
             </div>
           </div>
           <a
-            className="mt-10 inline-flex items-center gap-2 rounded-full bg- px-7 py-3 text-xs uppercase tracking-[.16em] text-white transition hover:bg-[#601d31] hover:text-white!"
+            className="mt-10 inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3 text-xs uppercase tracking-[0.16em] text-white no-underline transition hover:bg-wine"
             href={zoom.link}
             target="_blank"
             rel="noreferrer"
@@ -414,7 +552,7 @@ function ZoomMeeting() {
             Join Zoom <ArrowRight size={15} />
           </a>
         </div>
-        <p className="mt-10 font-serif text-lg italic leading-8 text-[#756d6a]">
+        <p className="mt-10 font-serif text-lg leading-8 text-muted-foreground italic">
           Please join a few minutes early. The ceremony will begin promptly at
           1:00 PM.
         </p>
@@ -425,21 +563,35 @@ function ZoomMeeting() {
 
 function Photography() {
   return (
-    <section className="photography-section" id="photographs">
-      <div className="section-heading">
-        <p className="eyebrow">Order of photography</p>
-        <h2>
+    <section
+      className="bg-wine px-[8vw] py-[20vw] text-cream md:px-[10vw] md:py-[11vw]"
+      id="photographs"
+    >
+      <div className="max-w-[650px]">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#d5bfc1]">
+          Order of photography
+        </p>
+        <h2 className="mb-5 font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
           Frames to
           <br />
-          <i>remember.</i>
+          <i className="font-normal text-accent">remember.</i>
         </h2>
-        <p>After the ceremony, we will gather for these joyful portraits.</p>
+        <p className="text-[0.9rem] leading-[1.7] text-[#d5bfc1]">
+          After the ceremony, we will gather for these joyful portraits.
+        </p>
       </div>
-      <div className="photo-grid">
+      <div className="mx-auto mt-12 grid max-w-[950px] grid-cols-1 gap-4 md:mt-20 md:grid-cols-2">
         {photography.map((item, index) => (
-          <div className="photo-card" key={item}>
-            <span>0{index + 1}</span>
-            <h3>{item}</h3>
+          <div
+            className="flex items-center gap-6 border border-cream/25 p-7"
+            key={item}
+          >
+            <span className="font-serif text-[1.3rem] text-[#d7a7b1] italic">
+              0{index + 1}
+            </span>
+            <h3 className="m-0 font-serif text-2xl font-normal tracking-[-0.04em]">
+              {item}
+            </h3>
           </div>
         ))}
       </div>
@@ -449,28 +601,34 @@ function Photography() {
 
 function UnableToJoin() {
   return (
-    <section className="online-section">
-      <div className="online-image">
+    <section className="grid items-stretch md:grid-cols-2">
+      <div className="relative order-2 min-h-[105vw] bg-[#282026] md:order-none md:min-h-[600px]">
         <Image
           src={wedding.heroImages[2]}
-          alt="Lagos city skyline"
+          alt="Seun and Benjamin"
           fill
-          sizes="50vw"
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-contain object-center saturate-[0.75]"
         />
       </div>
-      <div className="online-copy">
-        <p className="eyebrow">Join us online</p>
-        <h2>
+      <div className="order-1 flex flex-col justify-center px-[8vw] pt-[20vw] pb-0 md:order-none md:p-[10vw]">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
+          Join us online
+        </p>
+        <h2 className="mb-5 font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
           Unable to be
           <br />
-          <i>there in person?</i>
+          <i className="font-normal text-accent">there in person?</i>
         </h2>
-        <p>
+        <p className="mb-8 max-w-[450px] text-base leading-[1.8] text-muted-foreground">
           We would love to have you celebrate with us virtually. Join us online
           as we say “I do” and share in this special moment from wherever you
           are.
         </p>
-        <a className="dark-button" href="#rsvp">
+        <a
+          className="inline-flex w-fit items-center justify-center gap-2.5 bg-ink px-5.5 py-4 text-[0.68rem] uppercase tracking-[0.14em] text-cream no-underline"
+          href="#rsvp"
+        >
           View joining details <ArrowRight size={16} />
         </a>
       </div>
@@ -481,17 +639,24 @@ function UnableToJoin() {
 function Gallery() {
   const [selected, setSelected] = useState<number | null>(null);
   return (
-    <section className="gallery-section" id="gallery">
-      <div className="section-heading">
-        <p className="eyebrow">A few frames</p>
-        <h2>
-          In good <i>company.</i>
+    <section
+      className="bg-[#282026] px-[8vw] py-[20vw] text-cream md:px-[4vw] md:py-[11vw]"
+      id="gallery"
+    >
+      <div className="md:ml-[6vw]">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#c7b4b2]">
+          A few frames
+        </p>
+        <h2 className="font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
+          In good <i className="font-normal text-accent">company.</i>
         </h2>
       </div>
-      <div className="gallery-grid">
+      <div className="mt-12 grid grid-cols-2 gap-1.5 md:mt-16 md:grid-cols-4 md:gap-2.5">
         {gallery.map((image, i) => (
           <button
-            className="gallery-item"
+            className={`relative aspect-3/4 overflow-hidden border-0 bg-[#333] p-0 ${
+              i % 2 === 1 ? "mt-8 md:mt-16" : ""
+            }`}
             key={image.src}
             onClick={() => setSelected(i)}
           >
@@ -500,25 +665,30 @@ function Gallery() {
               alt={image.label}
               fill
               sizes="(max-width: 768px) 50vw, 25vw"
+              className="object-contain object-center transition-transform duration-500 hover:scale-105"
             />
           </button>
         ))}
       </div>
       {selected !== null && (
         <div
-          className="lightbox"
+          className="fixed inset-0 z-30 grid place-items-center bg-[#191613]/92 p-[5vw]"
           role="dialog"
           aria-modal="true"
           onClick={() => setSelected(null)}
         >
-          <button className="close-button" aria-label="Close gallery">
+          <button
+            className="absolute top-8 right-8 border-0 bg-transparent text-cream"
+            aria-label="Close gallery"
+          >
             <X />
           </button>
           <Image
             src={gallery[selected].src}
             alt={gallery[selected].label}
             width={1400}
-            height={1000}
+            height={2100}
+            className="h-auto max-h-[85vh] w-auto object-contain"
             onClick={(e) => e.stopPropagation()}
           />
         </div>
@@ -531,61 +701,84 @@ function RSVP() {
   const [sent, setSent] = useState(false);
   const [name, setName] = useState("");
   return (
-    <section className="rsvp-section" id="rsvp">
+    <section
+      className="bg-accent px-[8vw] py-[24vw] text-cream md:px-[10vw] md:py-[12vw]"
+      id="rsvp"
+    >
       {sent ? (
-        <div className="success">
-          <Check size={28} />
-          <p className="eyebrow">Thank you, {name || "friend"}</p>
-          <h2>
+        <div className="mx-auto max-w-[650px] text-center">
+          <Check size={28} className="mx-auto mb-8" />
+          <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#f0dfe0]">
+            Thank you, {name || "friend"}
+          </p>
+          <h2 className="mb-5 font-serif text-[clamp(4rem,7vw,7rem)] leading-[0.86] font-normal tracking-[-0.04em]">
             We will hold
             <br />
-            <i>you in our hearts.</i>
+            <i className="font-normal">you in our hearts.</i>
           </h2>
           <p>
             Your response has been noted. We cannot wait to celebrate together.
           </p>
         </div>
       ) : (
-        <div className="rsvp-inner">
+        <div className="mx-auto grid max-w-[1100px] gap-16 md:grid-cols-2 md:gap-[8vw]">
           <div>
-            <p className="eyebrow">Unable to join?</p>
-            <h2>
+            <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#f0dfe0]">
+              Unable to join?
+            </p>
+            <h2 className="mb-5 font-serif text-[clamp(4rem,7vw,7rem)] leading-[0.86] font-normal tracking-[-0.04em]">
               Let us
               <br />
-              <i>know.</i>
+              <i className="font-normal">know.</i>
             </h2>
-            <p className="muted">
+            <p className="text-[0.9rem] leading-[1.7] text-[#f0dfe0]">
               Whether you will be with us in person or in spirit, your response
               means so much.
             </p>
           </div>
           <form
+            className="grid gap-5"
             onSubmit={(e) => {
               e.preventDefault();
               if (name.trim()) setSent(true);
             }}
           >
-            <label>
+            <label className="grid gap-2 text-[0.68rem] uppercase tracking-[0.1em] text-[#f5e5e1]">
               Your name
               <input
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your name"
+                className="w-full rounded-none border-0 border-b border-[#d8aab1] bg-transparent py-2.5 text-[0.9rem] text-cream outline-none placeholder:text-[#f0cdd1]"
               />
             </label>
-            <label>
+            <label className="grid gap-2 text-[0.68rem] uppercase tracking-[0.1em] text-[#f5e5e1]">
               Your response
-              <select defaultValue="yes">
-                <option value="yes">Joyfully accepts</option>
-                <option value="no">Regretfully declines</option>
+              <select
+                defaultValue="yes"
+                className="w-full rounded-none border-0 border-b border-[#d8aab1] bg-transparent py-2.5 text-[0.9rem] text-cream outline-none"
+              >
+                <option value="yes" className="text-ink">
+                  Joyfully accepts
+                </option>
+                <option value="no" className="text-ink">
+                  Regretfully declines
+                </option>
               </select>
             </label>
-            <label>
+            <label className="grid gap-2 text-[0.68rem] uppercase tracking-[0.1em] text-[#f5e5e1]">
               Anything we should know?
-              <textarea rows={3} placeholder="A note for the couple..." />
+              <textarea
+                rows={3}
+                placeholder="A note for the couple..."
+                className="w-full rounded-none border-0 border-b border-[#d8aab1] bg-transparent py-2.5 text-[0.9rem] text-cream outline-none placeholder:text-[#f0cdd1]"
+              />
             </label>
-            <button className="dark-button" type="submit">
+            <button
+              className="inline-flex w-fit items-center justify-center gap-2.5 border-0 bg-ink px-5.5 py-4 text-[0.68rem] uppercase tracking-[0.14em] text-cream"
+              type="submit"
+            >
               Send response <ArrowRight size={16} />
             </button>
           </form>
@@ -597,8 +790,12 @@ function RSVP() {
 
 function MobileMenu({ close }: { close: () => void }) {
   return (
-    <div className="mobile-menu">
-      <button aria-label="Close menu" onClick={close}>
+    <div className="fixed inset-0 z-20 flex flex-col items-center justify-center gap-7 bg-ink text-cream">
+      <button
+        aria-label="Close menu"
+        onClick={close}
+        className="absolute top-6 right-[4vw] border-0 bg-transparent text-inherit"
+      >
         <X />
       </button>
       {navItems.map((item) => (
@@ -606,6 +803,7 @@ function MobileMenu({ close }: { close: () => void }) {
           key={item}
           onClick={close}
           href={`#${item.toLowerCase().replace(" ", "-")}`}
+          className="font-serif text-[2.8rem] no-underline"
         >
           {item}
         </a>
@@ -634,10 +832,13 @@ export default function Page() {
         <UnableToJoin />
         <Gallery />
         <RSVP />
-        <footer>
+        <footer className="flex items-center justify-between bg-ink px-[6vw] py-6 text-[0.7rem] text-cream md:px-[4vw] md:py-8">
           <Heart size={17} fill="currentColor" />
-          <p>With love, Naomi & Benjamin</p>
-          <a href="#top">
+          <p className="hidden m-0 md:block">With love, Seun & Benjamin</p>
+          <a
+            href="#top"
+            className="flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.1em] no-underline"
+          >
             Back to top <ChevronDown size={15} />
           </a>
         </footer>

@@ -1,45 +1,51 @@
 export const wedding = {
-  couple: "Naomi & Benjamin",
+  couple: "Seun & Benjamin",
   date: "Thursday, November 5, 2026",
   shortDate: "05.11.26",
   time: "1:00 PM prompt",
   venue: "Kingdom Hall of Jehovah’s Witnesses",
   address:
     "4/6 Akinyemi Avenue, behind Petrocam Filling Station, by Elf Bus Stop, Lagos",
+  mapsUrl: "https://maps.app.goo.gl/bwaaZHRXsbNNQkiR9",
   heroImages: [
-    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85",
-    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=85",
-    "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1800&q=85",
+    "/images/image-five.JPG",
+    "/images/image-two.jpg",
+    "/images/image-six.jpg",
   ],
   gallery: [
     {
-      src: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85",
+      src: "/images/image-one.jpg",
       label: "Us",
       category: "couple",
     },
     {
-      src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=85",
+      src: "/images/image-two.jpg",
       label: "The day",
       category: "day",
     },
     {
-      src: "https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=1200&q=85",
+      src: "/images/image-five.JPG",
       label: "The day",
       category: "day",
     },
     {
-      src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=85",
+      src: "/images/image-four.jpg",
       label: "Details",
       category: "details",
     },
     {
-      src: "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?auto=format&fit=crop&w=1200&q=85",
+      src: "/images/image-six.jpg",
       label: "Us",
       category: "couple",
     },
     {
-      src: "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1200&q=85",
+      src: "/images/image-seven.jpg",
       label: "Details",
+      category: "details",
+    },
+    {
+      src: "/images/image-three.jpg",
+      label: "Us",
       category: "details",
     },
   ],
@@ -51,7 +57,7 @@ export const ceremony = [
   ["01", "Chairman", "Brother Jonathan Hanson"],
   ["02", "Opening Prayer", "Brother Koukoui Theophile"],
   ["03", "Wedding Talk", "Brother Gideon Ataraire — Officiating Minister"],
-  ["04", "Exchange of Vows", "Naomi & Benjamin"],
+  ["04", "Exchange of Vows", "Seun & Benjamin"],
   ["05", "Signing of Marriage Documents", "The official moment"],
   ["06", "Closing Prayer", "Brother Samuel Ajie"],
 ];
