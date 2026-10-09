@@ -3,15 +3,17 @@
 @import "shadcn/tailwind.css";
 
 :root {
-  --background: #f8f5f0;
-  --foreground: #321d25;
-  --card: #f0e8df;
-  --muted: #756d6a;
-  --line: #ddd2ca;
-  --accent: #9e6474;
-  --wine: #601d31;
-  --ink: #321d25;
-  --cream: #f8f5f0;
+  --background: #faf6ff;
+  --foreground: #3b1848;
+  --card: #f4eaff;
+  --muted: #7a6788;
+  --line: #e4d4f2;
+  --accent: #b892d4;
+  --wine: #5c1a78;
+  --ink: #3b1848;
+  --cream: #faf6ff;
+  --lilac: #c9b0e0;
+  --purple: #6b21a8;
   --radius: 0.25rem;
 }
 
@@ -26,6 +28,8 @@
   --color-wine: var(--wine);
   --color-ink: var(--ink);
   --color-cream: var(--cream);
+  --color-lilac: var(--lilac);
+  --color-purple: var(--purple);
   --font-sans: var(--font-inter);
   --font-serif: var(--font-cormorant);
 }
