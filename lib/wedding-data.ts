@@ -2,7 +2,7 @@ export const wedding = {
   couple: "Seun & Benjamin",
   date: "Thursday, November 5, 2026",
   shortDate: "05.11.26",
-  time: "1:00 PM prompt",
+  time: "11:00 AM prompt",
   venue: "Kingdom Hall of Jehovah’s Witnesses",
   address:
     "4/6 Akinyemi Avenue, behind Petrocam Filling Station, by Elf Bus Stop, Lagos",
@@ -64,12 +64,12 @@ export const wedding = {
 export const gallery = wedding.gallery;
 
 export const ceremony = [
-  ["01", "Chairman", "Brother Jonathan Hanson"],
-  ["02", "Opening Prayer", "Brother Koukoui Theophile"],
-  ["03", "Wedding Talk", "Brother Gideon Ataraire — Officiating Minister"],
+  ["01", "Chairman", "Brother Titus Elegbede"],
+  ["02", "Opening Prayer", "Brother Emmanuel Siwoku"],
+  ["03", "Wedding Talk", "Brother Jahswill Stevens — Officiating Minister"],
   ["04", "Exchange of Vows", "Seun & Benjamin"],
-  ["05", "Signing of Marriage Documents", "The official moment"],
-  ["06", "Closing Prayer", "Brother Samuel Ajie"],
+  // ["05", "Signing of Marriage Documents", "The official moment"],
+  ["06", "Closing Prayer", "Brother Jahswill Stevens"],
 ];
 
 export const photography = [
@@ -97,20 +97,20 @@ export const story = [
 ];
 
 export const bridalParty = [
-  { name: "Micheal Adebayo", role: "Best man" },
-  { name: "Still to be announced", role: "Best lady" },
+  { name: "Michael Adebayo", role: "Best man" },
+  { name: "Dorcas Kushikoh", role: "Best lady" },
   { name: "Romans Omole", role: "Little bride" },
-  { name: "Still to be announced", role: "Little groom" },
+  // { name: "Still to be announced", role: "Little groom" },
 ];
 
 export const programme = [
-  ["1:00 PM", "Wedding Ceremony", "Kingdom Hall of Jehovah’s Witnesses"],
+  ["11:00 AM", "Wedding Ceremony", "Kingdom Hall of Jehovah’s Witnesses"],
   ["2:30 PM", "Order of Photography", "With family and friends"],
   ["After", "Light refreshments", "Thoughtfully arranged after the ceremony"],
 ];
 
 export const zoom = {
-  date: "Thursday, November 5, 2026 · 1:00 PM",
+  date: "Thursday, November 5, 2026 · 11:00 AM",
   meetingId: "834 7895 4851",
   passcode: "692293",
   link: "https://zoom.us/j/83478954851",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -25,6 +25,7 @@ import {
 const navItems = [
   "Invitation",
   "Details",
+  "Theme",
   "Ceremony",
   "Bridal party",
   "Photographs",
@@ -33,21 +34,21 @@ const navItems = [
 ];
 
 function Countdown() {
-  const target = new Date("2026-11-05T13:00:00+01:00").getTime();
+  const target = new Date("2026-11-05T11:00:00+01:00").getTime();
   const [now, setNow] = useState(Date.now());
   useEffect(() => {
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
   }, []);
   const values = useMemo(() => {
-    const diff = Math.max(0, target - now);
+    const diff = Math.max(0, target - (now ?? target));
     return [
       Math.floor(diff / 86400000),
       Math.floor(diff / 3600000) % 24,
       Math.floor(diff / 60000) % 60,
       Math.floor(diff / 1000) % 60,
     ];
-  }, [now]);
+  }, [now, target]);
   return (
     <div
       className="mt-10 flex justify-center gap-1.5 md:gap-2"
@@ -61,12 +62,15 @@ function Countdown() {
       ].map(([value, label]) => (
         <div
           key={String(label)}
-          className="grid min-w-[4.4rem] rounded-[0.55rem] border border-cream/28 bg-ink/25 px-1.5 py-2.5 backdrop-blur-[5px] md:min-w-[5.8rem] md:px-2.5 md:py-3.5"
+          className="grid min-w-[4.4rem] rounded-[0.55rem] border border-white/30 bg-wine/30 px-1.5 py-2.5 backdrop-blur-[5px] md:min-w-[5.8rem] md:px-2.5 md:py-3.5"
         >
-          <strong className="font-serif text-[1.55rem] font-normal md:text-[2rem]">
+          <strong
+            className="font-serif text-[1.55rem] font-normal md:text-[2rem]"
+            suppressHydrationWarning
+          >
             {String(value).padStart(2, "0")}
           </strong>
-          <span className="text-[0.47rem] uppercase tracking-[0.1em] text-[#decfc9] md:text-[0.58rem] md:tracking-[0.18em]">
+          <span className="text-[0.47rem] uppercase tracking-[0.1em] text-lilac md:text-[0.58rem] md:tracking-[0.18em]">
             {label}
           </span>
         </div>
@@ -91,7 +95,7 @@ function CurvedHashtag() {
         />
       </defs>
       <text
-        fill="#eee0d9"
+        fill="#f3e8ff"
         fontSize="15"
         letterSpacing="5"
         style={{
@@ -109,7 +113,7 @@ function CurvedHashtag() {
 
 function Entry({ onEnter }: { onEnter: () => void }) {
   return (
-    <section className="relative flex min-h-svh items-center justify-center overflow-hidden bg-[#282026] text-cream">
+    <section className="relative flex min-h-svh items-center justify-center overflow-hidden bg-[#2a1038] text-cream">
       <div className="absolute inset-0">
         <Image
           src="/images/image-one.jpg"
@@ -120,12 +124,12 @@ function Entry({ onEnter }: { onEnter: () => void }) {
           className="object-contain object-center saturate-[0.72]"
         />
       </div>
-      <div className="absolute inset-0 bg-linear-to-b from-[#230c13]/28 via-[#230c13]/18 to-[#230c13]/78" />
+      <div className="absolute inset-0 bg-linear-to-b from-[#3b1848]/35 via-[#5c1a78]/20 to-[#2a1038]/80" />
       <div className="relative z-1 px-6 py-16 text-center md:px-10">
-        <p className="mb-3 text-[0.68rem] uppercase tracking-[0.28em] text-[#eee0d9]">
+        <p className="mb-3 text-[0.68rem] uppercase tracking-[0.28em] text-[#f3e8ff]">
           Countdown to a beautiful beginning
         </p>
-        <p className="mb-2 text-[0.68rem] uppercase tracking-[0.28em] text-[#eee0d9]">
+        <p className="mb-2 text-[0.68rem] uppercase tracking-[0.28em] text-[#f3e8ff]">
           Circle the date in your calendar
         </p>
         <CurvedHashtag />
@@ -139,7 +143,7 @@ function Entry({ onEnter }: { onEnter: () => void }) {
         </p>
         <Countdown />
         <button
-          className="mt-12 inline-flex items-center gap-2.5 border-0 border-b border-current bg-transparent py-3 text-[0.74rem] uppercase tracking-[0.12em] text-cream"
+          className="mt-12 inline-flex items-center gap-2.5 border-0 border-b border-current bg-transparent py-3 text-[0.74rem] uppercase tracking-[0.12em] text-cream cursor-pointer"
           onClick={onEnter}
         >
           Enter invitation <ArrowRight size={15} />
@@ -155,7 +159,7 @@ function Header({ onMenu }: { onMenu: () => void }) {
       <a href="#top" className="font-serif text-[1.8rem] tracking-[-0.1em]">
         S<span className="mx-[0.08em] text-accent">&</span>B
       </a>
-      <nav className="hidden gap-6 md:flex">
+      <nav className="hidden gap-4 lg:flex">
         {navItems.map((item) => (
           <a
             key={item}
@@ -168,7 +172,7 @@ function Header({ onMenu }: { onMenu: () => void }) {
       </nav>
       <button
         aria-label="Open menu"
-        className="border-0 bg-transparent text-inherit md:hidden"
+        className="border-0 bg-transparent text-inherit lg:hidden"
         onClick={onMenu}
       >
         <Menu size={22} />
@@ -177,169 +181,137 @@ function Header({ onMenu }: { onMenu: () => void }) {
   );
 }
 
-function Hero() {
-  const [index, setIndex] = useState(0);
-  useEffect(() => {
-    const timer = setInterval(
-      () => setIndex((i) => (i + 1) % wedding.heroImages.length),
-      6000,
-    );
-    return () => clearInterval(timer);
-  }, []);
-  return (
-    <section
-      className="relative flex min-h-svh items-center justify-center overflow-hidden bg-[#282026] text-cream"
-      id="top"
-    >
-      <div className="absolute inset-0">
-        {wedding.heroImages.map((src, i) => (
-          <Image
-            key={src}
-            src={src}
-            alt="A moment from Seun and Benjamin's wedding"
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            className={`object-contain object-center saturate-[0.72] transition-opacity duration-500 ${
-              i === index ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
-      </div>
-      <div className="absolute inset-0 bg-linear-to-b from-[#230c13]/28 via-[#230c13]/18 to-[#230c13]/78" />
-      <div className="relative z-1 px-6 py-24 text-center md:px-10">
-        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#eee0d9]">
-          A sacred union
-        </p>
-        <h1 className="mb-6 font-serif text-[5rem] leading-[0.76] font-normal tracking-[-0.04em] md:text-[clamp(5rem,13vw,13rem)]">
-          You&apos;re
-          <br />
-          <i className="font-normal text-accent">invited.</i>
-        </h1>
-        <p className="mx-auto mb-5 max-w-md text-[0.95rem] leading-7 text-[#eee0d9]">
-          Join our families as we begin this beautiful chapter of love and faith
-          before Jehovah.
-        </p>
-        <p className="text-[0.72rem] uppercase tracking-[0.24em]">
-          Thursday · 1:00 PM prompt
-        </p>
-        <p className="mt-3 text-[0.72rem] uppercase tracking-[0.18em] text-[#decfc9]">
-          Kingdom Hall of Jehovah&apos;s Witnesses
-        </p>
-      </div>
-      <div className="absolute right-[4vw] bottom-8 left-[4vw] flex items-center justify-between text-[0.62rem] uppercase tracking-[0.14em]">
-        <span className="hidden items-center gap-2 md:inline-flex">
-          Scroll to explore
-        </span>
-        <ArrowDown size={16} className="hidden md:block" />
-        <div className="ml-auto flex items-center gap-5">
-          <button
-            aria-label="Previous photo"
-            className="grid size-8 place-items-center rounded-full border border-[#bcb4aa] bg-transparent text-inherit"
-            onClick={() =>
-              setIndex(
-                (i) =>
-                  (i + wedding.heroImages.length - 1) %
-                  wedding.heroImages.length,
-              )
-            }
-          >
-            ←
-          </button>
-          <span>
-            0{index + 1}{" "}
-            <b className="font-normal">/ 0{wedding.heroImages.length}</b>
-          </span>
-          <button
-            aria-label="Next photo"
-            className="grid size-8 place-items-center rounded-full border border-[#bcb4aa] bg-transparent text-inherit"
-            onClick={() => setIndex((i) => (i + 1) % wedding.heroImages.length)}
-          >
-            →
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function GalleryArea() {
+  const images = wedding.galleryImages;
   const [index, setIndex] = useState(0);
+  const [drag, setDrag] = useState(0);
+  const [snapping, setSnapping] = useState(true);
+  const [width, setWidth] = useState(0);
+  const wrapRef = useRef<HTMLElement>(null);
+  const startX = useRef<number | null>(null);
+  const startY = useRef(0);
+  const swiping = useRef(false);
+
   useEffect(() => {
-    const timer = setInterval(
-      () => setIndex((i) => (i + 1) % wedding.heroImages.length),
-      6000,
-    );
-    return () => clearInterval(timer);
+    const el = wrapRef.current;
+    if (!el) return;
+    const sync = () => setWidth(el.offsetWidth);
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
+
+  const goTo = (next: number) => {
+    setSnapping(true);
+    setDrag(0);
+    setIndex((next + images.length) % images.length);
+  };
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    startX.current = e.clientX;
+    startY.current = e.clientY;
+    swiping.current = false;
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (startX.current == null) return;
+    const dx = e.clientX - startX.current;
+    const dy = e.clientY - startY.current;
+    if (!swiping.current) {
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+      if (Math.abs(dy) >= Math.abs(dx)) {
+        startX.current = null;
+        return;
+      }
+      swiping.current = true;
+      setSnapping(false);
+      e.currentTarget.setPointerCapture(e.pointerId);
+    }
+    setDrag(dx);
+  };
+
+  const endPointer = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (startX.current == null) return;
+    const dx = e.clientX - startX.current;
+    startX.current = null;
+    if (!swiping.current) {
+      setDrag(0);
+      return;
+    }
+    swiping.current = false;
+    const threshold = Math.min(80, (width || window.innerWidth) * 0.15);
+    if (dx < -threshold) goTo(index + 1);
+    else if (dx > threshold) goTo(index - 1);
+    else {
+      setSnapping(true);
+      setDrag(0);
+    }
+  };
+
   return (
     <section
-      className="relative flex min-h-svh items-center justify-center overflow-hidden bg-[#282026] text-cream"
-      id="top"
+      ref={wrapRef}
+      className="relative min-h-svh overflow-hidden bg-[#2a1038] text-cream select-none"
     >
-      <div className="absolute inset-0">
-        {wedding.galleryImages.map((src, i) => (
-          <Image
+      <div
+        className="flex h-svh cursor-grab touch-pan-y active:cursor-grabbing"
+        style={{
+          transform: `translate3d(${-index * (width || 0) + drag}px, 0, 0)`,
+          transition: snapping ? "transform 380ms ease" : "none",
+        }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endPointer}
+        onPointerCancel={endPointer}
+      >
+        {images.map((src, i) => (
+          <div
             key={src}
-            src={src}
-            alt="A moment from Seun and Benjamin's wedding"
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            className={`object-contain object-center saturate-[0.72] transition-opacity duration-500 ${
-              i === index ? "opacity-100" : "opacity-0"
-            }`}
-          />
+            className="relative h-svh shrink-0"
+            style={{ width: width || "100%" }}
+          >
+            <Image
+              src={src}
+              alt="A moment from Seun and Benjamin's wedding"
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              draggable={false}
+              className="pointer-events-none object-contain object-center"
+            />
+          </div>
         ))}
       </div>
-      {/* <div className="absolute inset-0 bg-linear-to-b from-[#230c13]/28 via-[#230c13]/18 to-[#230c13]/78" /> */}
-      {/* <div className="relative z-1 px-6 py-24 text-center md:px-10">
-        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#eee0d9]">
-          A sacred union
-        </p>
-        <h1 className="mb-6 font-serif text-[5rem] leading-[0.76] font-normal tracking-[-0.04em] md:text-[clamp(5rem,13vw,13rem)]">
-          You&apos;re
-          <br />
-          <i className="font-normal text-accent">invited.</i>
-        </h1>
-        <p className="mx-auto mb-5 max-w-md text-[0.95rem] leading-7 text-[#eee0d9]">
-          Join our families as we begin this beautiful chapter of love and faith
-          before Jehovah.
-        </p>
-        <p className="text-[0.72rem] uppercase tracking-[0.24em]">
-          Thursday · 1:00 PM prompt
-        </p>
-        <p className="mt-3 text-[0.72rem] uppercase tracking-[0.18em] text-[#decfc9]">
-          Kingdom Hall of Jehovah&apos;s Witnesses
-        </p>
-      </div> */}
-      <div className="absolute right-[4vw] bottom-8 left-[4vw] flex items-center justify-between text-[0.62rem] uppercase tracking-[0.14em]">
+      <div className="pointer-events-none absolute right-[4vw] bottom-8 left-[4vw] z-2 flex items-center justify-between text-[0.62rem] uppercase tracking-[0.14em]">
         <span className="hidden items-center gap-2 md:inline-flex">
-          Scroll to explore
+          Swipe to explore
         </span>
         <ArrowDown size={16} className="hidden md:block" />
-        <div className="ml-auto flex items-center gap-5">
+        <div className="pointer-events-auto ml-auto flex items-center gap-5">
           <button
+            type="button"
             aria-label="Previous photo"
-            className="grid size-8 place-items-center rounded-full border border-[#bcb4aa] bg-transparent text-inherit"
-            onClick={() =>
-              setIndex(
-                (i) =>
-                  (i + wedding.galleryImages.length - 1) %
-                  wedding.galleryImages.length,
-              )
-            }
+            className="grid size-8 place-items-center rounded-full border border-lilac bg-transparent text-inherit"
+            onClick={(e) => {
+              e.stopPropagation();
+              goTo(index - 1);
+            }}
           >
             ←
           </button>
           <span>
-            0{index + 1}{" "}
-            <b className="font-normal">/ 0{wedding.galleryImages.length}</b>
+            {String(index + 1).padStart(2, "0")}{" "}
+            <b className="font-normal">/ {String(images.length).padStart(2, "0")}</b>
           </span>
           <button
+            type="button"
             aria-label="Next photo"
-            className="grid size-8 place-items-center rounded-full border border-[#bcb4aa] bg-transparent text-inherit"
-            onClick={() => setIndex((i) => (i + 1) % wedding.galleryImages.length)}
+            className="grid size-8 place-items-center rounded-full border border-lilac bg-transparent text-inherit"
+            onClick={(e) => {
+              e.stopPropagation();
+              goTo(index + 1);
+            }}
           >
             →
           </button>
@@ -380,9 +352,9 @@ function Invitation() {
         <div className="my-10 flex items-center gap-4 text-accent">
           — <Heart size={16} /> —
         </div>
-        <p className="font-serif text-2xl text-muted-foreground italic">
+        {/* <p className="font-serif text-2xl text-muted-foreground italic">
           Thank you for being part of our story.
-        </p>
+        </p> */}
       </div>
     </section>
   );
@@ -391,7 +363,7 @@ function Invitation() {
 function Details() {
   return (
     <section
-      className="bg-[#eee4db] px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]"
+      className="bg-card px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]"
       id="details"
     >
       <div className="max-w-[650px]">
@@ -417,7 +389,7 @@ function Details() {
         ].map(([label, value]) => (
           <div
             key={label}
-            className="grid grid-cols-[90px_1fr] gap-4 border-t border-[#d2c3b9] py-6 md:grid-cols-[180px_1fr] md:gap-8 md:py-6.5"
+            className="grid grid-cols-[90px_1fr] gap-4 border-t border-border py-6 md:grid-cols-[180px_1fr] md:gap-8 md:py-6.5"
           >
             <span className="text-[0.68rem] uppercase tracking-[0.22em] text-wine">
               {label}
@@ -440,15 +412,15 @@ function Details() {
         href={wedding.mapsUrl}
         target="_blank"
         rel="noreferrer"
-        className="mt-8 block overflow-hidden rounded-[1.25rem] border border-[#d2c3b9] bg-white shadow-[0_20px_60px_rgba(50,29,37,.08)] md:mt-10"
+        className="mt-8 -mx-[8vw] block w-[calc(100%+16vw)] overflow-hidden border-y border-border bg-white shadow-[0_20px_60px_rgba(59,24,72,.08)] md:mx-0 md:mt-10 md:w-full md:rounded-[1.25rem] md:border"
       >
         <Image
           src="/map.png"
           alt="Google Maps location of Kingdom Hall of Jehovah’s Witnesses"
           width={3360}
           height={1364}
-          className="h-auto w-full"
-          sizes="(max-width: 768px) 84vw, 80vw"
+          className="h-auto min-h-[220px] w-full object-cover object-center sm:min-h-0"
+          sizes="100vw"
         />
       </a>
     </section>
@@ -458,7 +430,7 @@ function Details() {
 function Ceremony() {
   return (
     <section
-      className="bg-[#f2e9df] px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]"
+      className="bg-white px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]"
       id="ceremony"
     >
       <div className="max-w-[650px]">
@@ -466,9 +438,9 @@ function Ceremony() {
           Order of ceremony
         </p>
         <h2 className="mb-5 font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
-          A sacred union
+          United in love,
           <br />
-          <i className="font-normal text-accent">before Jehovah.</i>
+          <i className="font-normal text-accent">guided by Jehovah.</i>
         </h2>
         <p className="text-[0.9rem] leading-[1.7] text-muted-foreground">
           A thoughtful order for the moments that matter most.
@@ -477,7 +449,7 @@ function Ceremony() {
       <div className="mx-auto mt-12 max-w-[850px] md:mt-20">
         {ceremony.map(([number, title, detail]) => (
           <div
-            className="grid grid-cols-[55px_1fr] gap-4 border-t border-[#d6c9be] py-7 md:grid-cols-[100px_1fr] md:gap-8"
+            className="grid grid-cols-[55px_1fr] gap-4 border-t border-border py-7 md:grid-cols-[100px_1fr] md:gap-8"
             key={number}
           >
             <span className="font-serif text-2xl text-accent italic">
@@ -498,10 +470,41 @@ function Ceremony() {
   );
 }
 
+function PartyMember({
+  person,
+}: {
+  person: (typeof bridalParty)[number];
+}) {
+  const initials =
+    person.name === "Still to be announced"
+      ? "—"
+      : person.name
+          .split(" ")
+          .map((part) => part[0])
+          .join("")
+          .slice(0, 2);
+
+  return (
+    <div className="text-center">
+      <div className="mx-auto mb-6 grid size-28 place-items-center rounded-full bg-wine font-serif text-[2rem] text-cream md:size-36 md:text-[2.5rem]">
+        {initials}
+      </div>
+      <h3 className="mb-1.5 font-serif text-[1.4rem] font-normal tracking-[-0.04em]">
+        {person.name}
+      </h3>
+      <p className="text-[0.68rem] uppercase tracking-[0.19em] text-muted-foreground">
+        {person.role}
+      </p>
+    </div>
+  );
+}
+
 function BridalParty() {
+  const [bestMan, bestLady, littleBride] = bridalParty;
+
   return (
     <section
-      className="px-[8vw] py-[20vw] text-center md:px-[10vw] md:py-[11vw]"
+      className="bg-cream px-[8vw] py-[20vw] text-center md:px-[10vw] md:py-[11vw]"
       id="bridal-party"
     >
       <div className="mx-auto max-w-[650px]">
@@ -509,35 +512,77 @@ function BridalParty() {
           The bridal party
         </p>
         <h2 className="mb-5 font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
-          Standing with us
+          Our special
           <br />
-          <i className="font-normal text-accent">in love.</i>
+          <i className="font-normal text-accent">three.</i>
         </h2>
         <p className="text-[0.9rem] leading-[1.7] text-muted-foreground">
           We are grateful for the beautiful souls standing with us on this
           special day.
         </p>
       </div>
-      <div className="mx-auto mt-12 grid max-w-[1000px] grid-cols-2 gap-x-4 gap-y-10 md:mt-20 md:grid-cols-4 md:gap-8">
-        {bridalParty.map((person) => (
-          <div className="text-center" key={person.role}>
-            <div className="mx-auto mb-6 grid size-28 place-items-center rounded-full bg-wine font-serif text-[2rem] text-cream md:size-36 md:text-[2.5rem]">
-              {person.name === "Still to be announced"
-                ? "—"
-                : person.name
-                    .split(" ")
-                    .map((part) => part[0])
-                    .join("")
-                    .slice(0, 2)}
-            </div>
-            <h3 className="mb-1.5 font-serif text-[1.4rem] font-normal tracking-[-0.04em]">
-              {person.name}
-            </h3>
-            <p className="text-[0.68rem] uppercase tracking-[0.19em] text-muted-foreground">
-              {person.role}
-            </p>
+      <div className="mx-auto mt-12 max-w-[720px] md:mt-20">
+        <div className="grid grid-cols-2 gap-6 md:gap-16">
+          <PartyMember person={bestMan} />
+          <PartyMember person={bestLady} />
+        </div>
+        <div className="mt-10 flex justify-center md:mt-14">
+          <div className="w-[min(100%,16rem)]">
+            <PartyMember person={littleBride} />
           </div>
-        ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Theme() {
+  return (
+    <section className="bg-white" id="theme">
+      <div className="relative aspect-[16/10] w-full md:aspect-[21/9]">
+        <Image
+          src="/theme-image.png"
+          alt="Purple, lilac, and white silk with roses"
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </div>
+      <div className="px-[8vw] py-16 text-center md:px-[14vw] md:py-24">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-wine">
+          Theme & dress code
+        </p>
+        <h2 className="mb-6 font-serif text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.05] font-normal tracking-[-0.03em]">
+          Elegance in Modesty,
+          <br />
+          Beauty in Simplicity
+        </h2>
+        <p className="mb-10 text-base text-muted-foreground md:text-lg">
+          Our color palette for the day is:
+        </p>
+        <div className="mb-12 flex flex-wrap items-start justify-center gap-8 md:gap-14">
+          {[
+            ["Purple", "bg-wine"],
+            ["Lilac", "bg-lilac"],
+            ["White", "bg-white border border-border"],
+          ].map(([label, swatch]) => (
+            <div key={label} className="flex flex-col items-center gap-3">
+              <span className={`size-16 rounded-full md:size-20 ${swatch}`} />
+              <span className="text-[0.68rem] uppercase tracking-[0.22em] text-wine">
+                {label}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="mx-auto max-w-2xl text-[0.95rem] leading-8 text-muted-foreground md:text-lg">
+          We would love to see you blend these colors beautifully as you join us
+          in celebration. As this is a spiritual and joyful occasion, we kindly
+          encourage{" "}
+          <strong className="font-semibold text-ink">
+            modesty and decency in dressing
+          </strong>
+          , reflecting values that honor Jehovah.
+        </p>
       </div>
     </section>
   );
@@ -545,7 +590,7 @@ function BridalParty() {
 
 function Programme() {
   return (
-    <section className="bg-[#e5d9d0] px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]">
+    <section className="bg-[#ede4f7] px-[8vw] py-[20vw] md:px-[10vw] md:py-[11vw]">
       <div className="max-w-[650px]">
         <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
           The day
@@ -557,7 +602,7 @@ function Programme() {
       <div className="mx-auto mt-12 max-w-[850px] md:mt-20">
         {programme.map(([time, title, place]) => (
           <div
-            className="grid grid-cols-[88px_1fr_20px] items-center gap-4 border-t border-[#cfc0b6] py-6 md:grid-cols-[100px_1fr_20px] md:gap-8"
+            className="grid grid-cols-[88px_1fr_20px] items-center gap-4 border-t border-border py-6 md:grid-cols-[100px_1fr_20px] md:gap-8"
             key={time}
           >
             <span className="text-[0.7rem] tracking-[0.12em] text-accent">
@@ -606,7 +651,7 @@ function ZoomMeeting() {
           </p>
           <p className="mb-10 text-lg text-accent">{zoom.date}</p>
           <div className="grid gap-8 md:grid-cols-2">
-            <div className="rounded-xl border border-[#eee4db] px-5 py-7">
+            <div className="rounded-xl border border-border px-5 py-7">
               <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                 Meeting ID
               </p>
@@ -614,13 +659,13 @@ function ZoomMeeting() {
                 {zoom.meetingId}
               </p>
               <button
-                className="rounded-full bg-[#d39aaa] px-6 py-2 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-[#b9788a]"
+                className="rounded-full bg-wine px-6 py-2 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-purple"
                 onClick={() => copy(zoom.meetingId)}
               >
                 Copy
               </button>
             </div>
-            <div className="rounded-xl border border-[#eee4db] px-5 py-7">
+            <div className="rounded-xl border border-border px-5 py-7">
               <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                 Passcode
               </p>
@@ -628,7 +673,7 @@ function ZoomMeeting() {
                 {zoom.passcode}
               </p>
               <button
-                className="rounded-full bg-[#d39aaa] px-6 py-2 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-[#b9788a]"
+                className="rounded-full bg-wine px-6 py-2 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-purple"
                 onClick={() => copy(zoom.passcode)}
               >
                 Copy
@@ -646,7 +691,7 @@ function ZoomMeeting() {
         </div>
         <p className="mt-10 font-serif text-lg leading-8 text-muted-foreground italic">
           Please join a few minutes early. The ceremony will begin promptly at
-          1:00 PM.
+          11:00 AM.
         </p>
       </div>
     </section>
@@ -660,7 +705,7 @@ function Photography() {
       id="photographs"
     >
       <div className="max-w-[650px]">
-        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#d5bfc1]">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-lilac">
           Order of photography
         </p>
         <h2 className="mb-5 font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
@@ -668,7 +713,7 @@ function Photography() {
           <br />
           <i className="font-normal text-accent">remember.</i>
         </h2>
-        <p className="text-[0.9rem] leading-[1.7] text-[#d5bfc1]">
+        <p className="text-[0.9rem] leading-[1.7] text-lilac">
           After the ceremony, we will gather for these joyful portraits.
         </p>
       </div>
@@ -678,7 +723,7 @@ function Photography() {
             className="flex items-center gap-6 border border-cream/25 p-7"
             key={item}
           >
-            <span className="font-serif text-[1.3rem] text-[#d7a7b1] italic">
+            <span className="font-serif text-[1.3rem] text-lilac italic">
               0{index + 1}
             </span>
             <h3 className="m-0 font-serif text-2xl font-normal tracking-[-0.04em]">
@@ -694,10 +739,10 @@ function Photography() {
 function UnableToJoin() {
   return (
     <section className="grid items-stretch md:grid-cols-2">
-      <div className="relative order-2 min-h-[105vw] bg-[#282026] md:order-none md:min-h-[600px]">
+      <div className="relative order-2 min-h-[105vw] md:order-none md:min-h-[600px]">
         <Image
-          src={wedding.heroImages[2]}
-          alt="Seun and Benjamin"
+          src='/ikoyi-bridge.jpg'
+          alt="Ikoyi Bridge"
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-contain object-center saturate-[0.75]"
@@ -732,11 +777,11 @@ function Gallery() {
   const [selected, setSelected] = useState<number | null>(null);
   return (
     <section
-      className="bg-[#282026] px-[8vw] py-[20vw] text-cream md:px-[4vw] md:py-[11vw]"
+      className="bg-[#2a1038] px-[8vw] py-[20vw] text-cream md:px-[4vw] md:py-[11vw]"
       id="gallery"
     >
       <div className="md:ml-[6vw]">
-        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#c7b4b2]">
+        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-lilac">
           A few frames
         </p>
         <h2 className="font-serif text-[clamp(3.3rem,7vw,6.8rem)] leading-[0.86] font-normal tracking-[-0.04em]">
@@ -746,7 +791,7 @@ function Gallery() {
       <div className="mt-12 grid grid-cols-2 gap-1.5 md:mt-16 md:grid-cols-4 md:gap-2.5">
         {gallery.map((image, i) => (
           <button
-            className={`relative aspect-3/4 overflow-hidden border-0 bg-[#333] p-0 ${
+            className={`relative aspect-3/4 overflow-hidden border-0 bg-[#3b1848] p-0 ${
               i % 2 === 1 ? "mt-8 md:mt-16" : ""
             }`}
             key={image.src}
@@ -764,7 +809,7 @@ function Gallery() {
       </div>
       {selected !== null && (
         <div
-          className="fixed inset-0 z-30 grid place-items-center bg-[#191613]/92 p-[5vw]"
+          className="fixed inset-0 z-30 grid place-items-center bg-[#2a1038]/92 p-[5vw]"
           role="dialog"
           aria-modal="true"
           onClick={() => setSelected(null)}
@@ -789,18 +834,42 @@ function Gallery() {
   );
 }
 
+function Appreciation() {
+  return (
+    <section className="bg-cream px-[8vw] py-[20vw] text-center md:px-[18vw] md:py-[12vw]">
+      <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-wine">
+        A note of appreciation
+      </p>
+      <h2 className="mb-8 font-serif text-[clamp(2.6rem,6vw,4.8rem)] leading-[1.05] font-normal tracking-[-0.03em] text-wine">
+        With Grateful Hearts
+      </h2>
+      <p className="mx-auto mb-6 max-w-2xl text-[1.05rem] leading-8 text-foreground md:text-lg">
+        We are truly grateful to Jehovah for making this beautiful day possible.
+        We also appreciate our family and friends for their love, support, good
+        wishes, journeying down here and tuning in online.
+      </p>
+      <p className="mx-auto mb-10 max-w-2xl text-[1.05rem] leading-8 text-foreground md:text-lg">
+        Thank you for being part of our joy. ❤️
+      </p>
+      <p className="font-serif text-2xl text-wine italic">
+        With love, Seun & Benjamin
+      </p>
+    </section>
+  );
+}
+
 function RSVP() {
   const [sent, setSent] = useState(false);
   const [name, setName] = useState("");
   return (
     <section
-      className="bg-accent px-[8vw] py-[24vw] text-cream md:px-[10vw] md:py-[12vw]"
+      className="bg-wine px-[8vw] py-[24vw] text-cream md:px-[10vw] md:py-[12vw]"
       id="rsvp"
     >
       {sent ? (
         <div className="mx-auto max-w-[650px] text-center">
           <Check size={28} className="mx-auto mb-8" />
-          <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#f0dfe0]">
+          <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-lilac">
             Thank you, {name || "friend"}
           </p>
           <h2 className="mb-5 font-serif text-[clamp(4rem,7vw,7rem)] leading-[0.86] font-normal tracking-[-0.04em]">
@@ -815,7 +884,7 @@ function RSVP() {
       ) : (
         <div className="mx-auto grid max-w-[1100px] gap-16 md:grid-cols-2 md:gap-[8vw]">
           <div>
-            <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-[#f0dfe0]">
+            <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-lilac">
               Unable to join?
             </p>
             <h2 className="mb-5 font-serif text-[clamp(4rem,7vw,7rem)] leading-[0.86] font-normal tracking-[-0.04em]">
@@ -823,7 +892,7 @@ function RSVP() {
               <br />
               <i className="font-normal">know.</i>
             </h2>
-            <p className="text-[0.9rem] leading-[1.7] text-[#f0dfe0]">
+            <p className="text-[0.9rem] leading-[1.7] text-lilac">
               Whether you will be with us in person or in spirit, your response
               means so much.
             </p>
@@ -835,21 +904,21 @@ function RSVP() {
               if (name.trim()) setSent(true);
             }}
           >
-            <label className="grid gap-2 text-[0.68rem] uppercase tracking-[0.1em] text-[#f5e5e1]">
+            <label className="grid gap-2 text-[0.68rem] uppercase tracking-[0.1em] text-lilac">
               Your name
               <input
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your name"
-                className="w-full rounded-none border-0 border-b border-[#d8aab1] bg-transparent py-2.5 text-[0.9rem] text-cream outline-none placeholder:text-[#f0cdd1]"
+                className="w-full rounded-none border-0 border-b border-lilac bg-transparent py-2.5 text-[0.9rem] text-cream outline-none placeholder:text-lilac/80"
               />
             </label>
-            <label className="grid gap-2 text-[0.68rem] uppercase tracking-[0.1em] text-[#f5e5e1]">
+            <label className="grid gap-2 text-[0.68rem] uppercase tracking-[0.1em] text-lilac">
               Your response
               <select
                 defaultValue="yes"
-                className="w-full rounded-none border-0 border-b border-[#d8aab1] bg-transparent py-2.5 text-[0.9rem] text-cream outline-none"
+                className="w-full rounded-none border-0 border-b border-lilac bg-transparent py-2.5 text-[0.9rem] text-cream outline-none"
               >
                 <option value="yes" className="text-ink">
                   Joyfully accepts
@@ -859,16 +928,16 @@ function RSVP() {
                 </option>
               </select>
             </label>
-            <label className="grid gap-2 text-[0.68rem] uppercase tracking-[0.1em] text-[#f5e5e1]">
+            <label className="grid gap-2 text-[0.68rem] uppercase tracking-[0.1em] text-lilac">
               Anything we should know?
               <textarea
                 rows={3}
                 placeholder="A note for the couple..."
-                className="w-full rounded-none border-0 border-b border-[#d8aab1] bg-transparent py-2.5 text-[0.9rem] text-cream outline-none placeholder:text-[#f0cdd1]"
+                className="w-full rounded-none border-0 border-b border-lilac bg-transparent py-2.5 text-[0.9rem] text-cream outline-none placeholder:text-lilac/80"
               />
             </label>
             <button
-              className="inline-flex w-fit items-center justify-center gap-2.5 border-0 bg-ink px-5.5 py-4 text-[0.68rem] uppercase tracking-[0.14em] text-cream"
+              className="inline-flex w-fit items-center justify-center gap-2.5 border-0 bg-white px-5.5 py-4 text-[0.68rem] uppercase tracking-[0.14em] text-wine"
               type="submit"
             >
               Send response <ArrowRight size={16} />
@@ -895,7 +964,7 @@ function MobileMenu({ close }: { close: () => void }) {
           key={item}
           onClick={close}
           href={`#${item.toLowerCase().replace(" ", "-")}`}
-          className="font-serif text-[2.8rem] no-underline"
+          className="font-serif text-[2.2rem] no-underline sm:text-[2.8rem]"
         >
           {item}
         </a>
@@ -912,11 +981,11 @@ export default function Page() {
     <>
       <Header onMenu={() => setMenu(true)} />
       {menu && <MobileMenu close={() => setMenu(false)} />}
-      <main>
-        {/* <Hero /> */}
+      <main id="top">
         <Invitation />
         <GalleryArea />
         <Details />
+        <Theme />
         <Ceremony />
         <BridalParty />
         <Programme />
@@ -924,10 +993,17 @@ export default function Page() {
         <ZoomMeeting />
         <UnableToJoin />
         <Gallery />
+        <Appreciation />
         <RSVP />
-        <footer className="flex items-center justify-between bg-ink px-[6vw] py-6 text-[0.7rem] text-cream md:px-[4vw] md:py-8">
-          <Heart size={17} fill="currentColor" />
-          <p className="hidden m-0 md:block">With love, Seun & Benjamin</p>
+        <footer className="flex flex-col items-center justify-between gap-4 bg-ink px-[6vw] py-8 text-center text-[0.7rem] text-cream md:flex-row md:px-[4vw] md:text-left">
+          <Heart size={17} fill="currentColor" className="hidden md:block" />
+          <p className="m-0">With love, Seun & Benjamin</p>
+          <a
+            href="mailto:abayomisilas50@gmail.com?subject=Wedding%20invitation%20website"
+            className="text-[0.62rem] uppercase tracking-[0.12em] text-lilac no-underline transition hover:text-white"
+          >
+            Designed by Haybesil
+          </a>
           <a
             href="#top"
             className="flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.1em] no-underline"
