@@ -705,7 +705,7 @@ function ZoomMeeting() {
 function Photography() {
   return (
     <section
-      className="bg-wine px-[8vw] py-[20vw] text-cream md:px-[10vw] md:py-[11vw]"
+      className="bg-wine px-[4vw] py-[20vw] text-cream md:px-[10vw] md:py-[11vw]"
       id="photographs"
     >
       <div className="max-w-[650px]">
@@ -724,7 +724,7 @@ function Photography() {
       <div className="mx-auto mt-12 grid max-w-[950px] grid-cols-2 gap-4 md:mt-20 md:grid-cols-2">
         {photography.map((item, index) => (
           <div
-            className="flex items-center gap-6 border border-cream/25 p-7"
+            className="flex items-center gap-6 border border-cream/25 p-3 md:p-7"
             key={item}
           >
             <span className="font-serif md:text-[1.3rem] text-lilac italic">
