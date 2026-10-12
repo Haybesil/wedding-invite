@@ -11,9 +11,9 @@ const cormorant = Cormorant_Garamond({
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Seun & Benjamin — 14.09.25",
+  title: "Seun & Benjamin — 05.11.26",
   description: "The wedding invitation of Seun and Benjamin.",
-  generator: "v0.app",
+  generator: "",
 };
 
 export const viewport: Viewport = {

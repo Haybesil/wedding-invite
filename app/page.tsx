@@ -1082,6 +1082,24 @@ function MobileMenu({ close }: { close: () => void }) {
   );
 }
 
+const WhatsAppIcon = ({ size = 24, color = "#25D366" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.3-4.9a8.4 8.4 0 1 1 16.2-3.8Z" />
+    <path d="M8.5 8.5c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .4-.1.6l-.6.7c-.2.2-.2.4 0 .6.5.9 1.3 1.6 2.2 2.1.2.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.6.8c.2.1.3.3.3.5 0 .3-.2 1.2-.7 1.6-.5.5-1.1.7-1.8.6-1-.1-2.2-.7-3.5-1.8-1.1-1-2-2.2-2.3-3.2-.4-1.1-.1-2.1.4-3Z" />
+  </svg>
+);
+
 export default function Page() {
   const [entered, setEntered] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -1109,12 +1127,26 @@ export default function Page() {
         <footer className="flex flex-col items-center justify-between gap-4 bg-ink px-[6vw] py-8 text-center text-[0.7rem] text-cream md:flex-row md:px-[4vw] md:text-left">
           <Heart size={17} fill="currentColor" className="hidden md:block" />
           <p className="m-0">With love, Seun & Benjamin</p>
-          <a
-            href="mailto:abayomisilas50@gmail.com?subject=Wedding%20invitation%20website"
-            className="text-[0.62rem] uppercase tracking-[0.12em] text-lilac no-underline transition hover:text-white"
-          >
-            Designed by Silas Abayomi
-          </a>
+
+          <div className="flex flex-col md:flex-row items-center md:gap-5">
+            <a
+              href="mailto:abayomisilas50@gmail.com?subject=Wedding%20invitation%20website"
+              className="text-[0.68rem] uppercase tracking-[0.12em] text-lilac no-underline transition hover:text-white"
+            >
+              Designed by Silas Abayomi
+              <span className="block text-[0.68rem] text-center uppercase tracking-[0.12em] text-lilac no-underline transition hover:text-white"><b>Tel:</b> +234 704 7712 645</span>
+            </a>
+            <a
+              href="https://wa.me/2348012345678"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Chat with us on WhatsApp"
+              className="inline-flex items-center gap-2 rounded-full text-white hover:bg-[#20BA5A]"
+            >
+              <WhatsAppIcon size={22} />
+              <span>Chat</span>
+            </a>
+          </div>
           <a
             href="#top"
             className="flex items-center gap-2 text-[0.62rem] uppercase tracking-[0.1em] no-underline"
