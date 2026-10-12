@@ -1081,7 +1081,7 @@ export default function Page() {
         <Appreciation />
         <Gifts />
         <Gallery />
-        <RSVP />
+        {/* <RSVP /> */}
         <footer className="flex flex-col items-center justify-between gap-4 bg-ink px-[6vw] py-8 text-center text-[0.7rem] text-cream md:flex-row md:px-[4vw] md:text-left">
           <Heart size={17} fill="currentColor" className="hidden md:block" />
           <p className="m-0">With love, Seun & Benjamin</p>
@@ -1089,7 +1089,7 @@ export default function Page() {
             href="mailto:abayomisilas50@gmail.com?subject=Wedding%20invitation%20website"
             className="text-[0.62rem] uppercase tracking-[0.12em] text-lilac no-underline transition hover:text-white"
           >
-            Designed by Haybesil
+            Designed by Silas Abayomi
           </a>
           <a
             href="#top"
