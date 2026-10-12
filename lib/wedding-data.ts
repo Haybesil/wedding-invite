@@ -14,13 +14,13 @@ export const wedding = {
   ],
 
   galleryImages: [
-    "/images/image-five.JPG",
+    "/images/image-four.jpg",
     "/images/image-two.jpg",
     "/images/image-six.jpg",
-    "/images/image-one.jpg",
+    "/images/image-five.JPG",
     "/images/image-three.jpg",
-    "/images/image-four.jpg",
     "/images/image-seven.jpg",
+    "/images/image-one.jpg",
   ],
   gallery: [
     {
@@ -105,7 +105,7 @@ export const bridalParty = [
 
 export const programme = [
   ["11:00 AM", "Wedding Ceremony", "Kingdom Hall of Jehovah’s Witnesses"],
-  ["2:30 PM", "Order of Photography", "With family and friends"],
+  ["After", "Order of Photography", "With family and friends"],
   ["After", "Light refreshments", "Thoughtfully arranged after the ceremony"],
 ];
 
@@ -114,4 +114,10 @@ export const zoom = {
   meetingId: "834 7895 4851",
   passcode: "692293",
   link: "https://zoom.us/j/83478954851",
+};
+
+export const gifts = {
+  accountName: "Seun & Benjamin",
+  bank: "Access Bank",
+  accountNumber: "0000000000",
 };
