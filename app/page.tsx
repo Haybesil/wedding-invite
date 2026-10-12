@@ -872,8 +872,8 @@ function Thanks() {
         With Grateful Hearts
       </h2>
       <p className="mx-auto mb-6 max-w-2xl text-[1.05rem] leading-8 text-foreground md:text-lg">
-        We truly we could host every one of you at a grand reception. At this
-        time, we humbly invite you to share in the provision we have made -
+        We truly wish we could host everyone of you to a grand reception. At
+        this time, we humbly invite you to share in the provision we have made -
         light refreshments will be thoroughly arranged after the ceremony at the
         Kingdom Hall.
       </p>
