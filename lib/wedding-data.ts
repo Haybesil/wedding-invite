@@ -119,9 +119,9 @@ export const programme = [
 
 export const zoom = {
   date: "Thursday, November 5, 2026 · 11:00 AM",
-  meetingId: "813 0276 7275",
-  passcode: "018898",
-  link: "https://jworg.zoom.us/j/81302767275",
+  meetingId: "967 844 1025",
+  passcode: "ALASEUN",
+  link: "https://jworg.zoom.us/j/9678441025?omn=88109912698",
 };
 
 export const gifts = {
