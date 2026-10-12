@@ -76,11 +76,19 @@ export const photography = [
   "Couple Alone",
   "Bride Alone",
   "Groom Alone",
-  "Couple with Bride’s Family",
+  "Maid of honor and Bestman",
+  "Bride with maid of honor",
+  "Groom with bestman",
+  "Couple with maid of honor and bestman",
+  "Couple with Speaker and Wife",
+  "Couple with Siwooku's",
   "Couple with Groom’s Family",
-  "Couple with Wedding Party",
-  "Little Bride",
-  "Family Portraits",
+  "Couple with Bride’s Family",
+  "Couple with New Estate Congregation",
+  "Couple with Addo Congregation",
+  "Couple with Fumman Chemical Nig. Ltd",
+  "Couple with RS Engineering Ltd",
+  "Couple with Friends and Well Wishers",
 ];
 
 export const story = [
@@ -119,5 +127,5 @@ export const zoom = {
 export const gifts = {
   accountName: "Oloyede seun Naomi",
   bank: "Access Bank",
-  accountNumber: "0000000000",
+  accountNumber: "0827572287",
 };
