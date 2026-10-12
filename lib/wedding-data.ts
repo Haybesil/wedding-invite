@@ -111,13 +111,13 @@ export const programme = [
 
 export const zoom = {
   date: "Thursday, November 5, 2026 · 11:00 AM",
-  meetingId: "834 7895 4851",
-  passcode: "692293",
-  link: "https://zoom.us/j/83478954851",
+  meetingId: "813 0276 7275",
+  passcode: "018898",
+  link: "https://jworg.zoom.us/j/81302767275",
 };
 
 export const gifts = {
-  accountName: "Seun & Benjamin",
+  accountName: "Oloyede seun Naomi",
   bank: "Access Bank",
   accountNumber: "0000000000",
 };
