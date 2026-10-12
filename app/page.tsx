@@ -872,7 +872,7 @@ function Gifts() {
 
   return (
     <section
-      className="bg-wine px-[8vw] py-[20vw] text-cream md:px-[12vw] md:py-[11vw]"
+      className="bg-wine px-[4vw] py-[20vw] text-cream md:px-[12vw] md:py-[11vw]"
       id="gifts"
     >
       <div className="mx-auto max-w-2xl">
