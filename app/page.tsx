@@ -1137,11 +1137,11 @@ export default function Page() {
               <span className="block text-[0.68rem] text-center uppercase tracking-[0.12em] text-lilac no-underline transition hover:text-white"><b>Tel:</b> +234 704 7712 645</span>
             </a>
             <a
-              href="https://wa.me/2348012345678"
+              href="https://wa.me/2349118450363"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Chat with us on WhatsApp"
-              className="inline-flex items-center gap-2 rounded-full text-white hover:bg-[#20BA5A]"
+              className="inline-flex items-center gap-2 rounded-full text-white"
             >
               <WhatsAppIcon size={22} />
               <span>Chat</span>
