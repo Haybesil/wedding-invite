@@ -727,10 +727,10 @@ function Photography() {
             className="flex items-center gap-6 border border-cream/25 p-7"
             key={item}
           >
-            <span className="font-serif text-[1.3rem] text-lilac italic">
+            <span className="font-serif md:text-[1.3rem] text-lilac italic">
               0{index + 1}
             </span>
-            <h3 className="m-0 font-serif text-xl md:text-2xl font-normal tracking-[-0.04em]">
+            <h3 className="m-0 font-serif text-base md:text-2xl font-normal tracking-[-0.04em]">
               {item}
             </h3>
           </div>
