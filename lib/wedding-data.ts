@@ -125,7 +125,7 @@ export const zoom = {
 };
 
 export const gifts = {
-  accountName: "Oloyede seun Naomi",
+  accountName: "Alabi Benjamin",
   bank: "Access Bank",
-  accountNumber: "0827572287",
+  accountNumber: "0064959658",
 };
