@@ -7,7 +7,9 @@ import {
   Check,
   ChevronDown,
   Clock3,
+  Gift,
   Heart,
+  Landmark,
   Menu,
   X,
 } from "lucide-react";
@@ -16,6 +18,7 @@ import {
   bridalParty,
   ceremony,
   gallery,
+  gifts,
   photography,
   programme,
   wedding,
@@ -29,6 +32,7 @@ const navItems = [
   "Ceremony",
   "Bridal party",
   "Photographs",
+  "Gifts",
   "Zoom",
   "RSVP",
 ];
@@ -635,16 +639,16 @@ function ZoomMeeting() {
       id="zoom"
     >
       <div className="mx-auto max-w-3xl">
-        <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
+        {/* <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
           Unable to be there in person?
-        </p>
+        </p> */}
         <h2 className="mb-5 font-serif text-5xl leading-[0.9] font-normal tracking-[-0.04em] md:text-7xl">
           Join us <i className="font-normal text-accent">online.</i>
         </h2>
-        <p className="mb-12 text-base leading-8 text-muted-foreground md:text-lg">
+        {/* <p className="mb-12 text-base leading-8 text-muted-foreground md:text-lg">
           We would love to have you celebrate with us virtually. Join us on Zoom
           as we say “I do” from wherever you are.
-        </p>
+        </p> */}
         <div className="mx-auto max-w-2xl rounded-[1.25rem] border border-border bg-white/70 px-6 py-10 shadow-[0_20px_60px_rgba(50,29,37,.06)] md:px-12">
           <p className="mb-3 text-sm uppercase tracking-[0.22em] text-muted-foreground">
             Wedding Zoom Meeting
@@ -717,7 +721,7 @@ function Photography() {
           After the ceremony, we will gather for these joyful portraits.
         </p>
       </div>
-      <div className="mx-auto mt-12 grid max-w-[950px] grid-cols-1 gap-4 md:mt-20 md:grid-cols-2">
+      <div className="mx-auto mt-12 grid max-w-[950px] grid-cols-2 gap-4 md:mt-20 md:grid-cols-2">
         {photography.map((item, index) => (
           <div
             className="flex items-center gap-6 border border-cream/25 p-7"
@@ -726,7 +730,7 @@ function Photography() {
             <span className="font-serif text-[1.3rem] text-lilac italic">
               0{index + 1}
             </span>
-            <h3 className="m-0 font-serif text-2xl font-normal tracking-[-0.04em]">
+            <h3 className="m-0 font-serif text-xl md:text-2xl font-normal tracking-[-0.04em]">
               {item}
             </h3>
           </div>
@@ -739,7 +743,7 @@ function Photography() {
 function UnableToJoin() {
   return (
     <section className="grid items-stretch md:grid-cols-2">
-      <div className="relative order-2 min-h-[105vw] md:order-none md:min-h-[600px]">
+      <div className="relative min-h-[105vw] md:min-h-[600px]">
         <Image
           src='/ikoyi-bridge.jpg'
           alt="Ikoyi Bridge"
@@ -748,7 +752,7 @@ function UnableToJoin() {
           className="object-contain object-center saturate-[0.75]"
         />
       </div>
-      <div className="order-1 flex flex-col justify-center px-[8vw] pt-[20vw] pb-0 md:order-none md:p-[10vw]">
+      <div className="order-1 flex flex-col justify-center px-[8vw] pt-[0vw] md:pt-[20vw] pb-0 md:order-none md:p-[10vw]">
         <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-muted-foreground">
           Join us online
         </p>
@@ -854,6 +858,88 @@ function Appreciation() {
       <p className="font-serif text-2xl text-wine italic">
         With love, Seun & Benjamin
       </p>
+    </section>
+  );
+}
+
+function Gifts() {
+  const [copied, setCopied] = useState(false);
+  const copyAccount = async () => {
+    await navigator.clipboard?.writeText(gifts.accountNumber);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <section
+      className="bg-wine px-[8vw] py-[20vw] text-cream md:px-[12vw] md:py-[11vw]"
+      id="gifts"
+    >
+      <div className="mx-auto max-w-2xl">
+        <p className="mb-8 text-[0.68rem] uppercase tracking-[0.28em] text-lilac">
+          Gifts & well wishes
+        </p>
+        <h2 className="mb-10 font-serif text-[clamp(2.6rem,8vw,5.4rem)] leading-[0.92] font-normal tracking-[-0.03em] text-lilac/35">
+          With Love and
+          <br />
+          Appreciation
+        </h2>
+        <p className="mb-12 max-w-xl text-[1.05rem] leading-8 text-cream md:text-lg">
+          Your presence at our wedding is already a gift. However, if you wish
+          to bless us further:
+        </p>
+        <div className="flex gap-4 border-b border-cream/15 py-8">
+          <Heart size={22} className="mt-0.5 shrink-0 text-lilac" />
+          <p className="m-0 text-[1.05rem] leading-8">
+            Cash gifts — in labeled envelopes so we can personally thank you
+          </p>
+        </div>
+        <div className="border-b border-cream/15 py-8">
+          <div className="mb-6 flex items-center gap-4">
+            <Landmark size={22} className="shrink-0 text-lilac" />
+            <p className="m-0 text-[1.05rem]">Bank Transfer</p>
+          </div>
+          <div className="rounded-2xl bg-ink/35 px-5 py-6 md:px-7">
+            {[
+              ["Name", gifts.accountName],
+              ["Bank", gifts.bank],
+            ].map(([label, value]) => (
+              <div
+                key={label}
+                className="mb-5 grid grid-cols-[5.5rem_1fr] items-center gap-4 md:grid-cols-[7rem_1fr]"
+              >
+                <span className="text-[0.62rem] uppercase tracking-[0.18em] text-lilac">
+                  {label}
+                </span>
+                <span className="text-[0.95rem] md:text-base">{value}</span>
+              </div>
+            ))}
+            <div className="grid grid-cols-[5.5rem_1fr] items-center gap-4 md:grid-cols-[7rem_1fr]">
+              <span className="text-[0.62rem] uppercase tracking-[0.18em] text-lilac">
+                Account
+              </span>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="font-mono text-[0.95rem] tracking-[0.04em] md:text-base">
+                  {gifts.accountNumber}
+                </span>
+                <button
+                  type="button"
+                  onClick={copyAccount}
+                  className="rounded-full bg-lilac px-4 py-1.5 text-[0.62rem] uppercase tracking-[0.16em] text-wine transition hover:bg-cream"
+                >
+                  {copied ? "Copied" : "Copy"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-4 pt-8">
+          <Gift size={22} className="mt-0.5 shrink-0 text-lilac" />
+          <p className="m-0 text-[1.05rem] leading-8">
+            Physical gifts — a designated person will be available at the venue
+          </p>
+        </div>
+      </div>
     </section>
   );
 }
@@ -985,15 +1071,16 @@ export default function Page() {
         <Invitation />
         <GalleryArea />
         <Details />
+        <UnableToJoin />
+        <ZoomMeeting />
         <Theme />
         <Ceremony />
         <BridalParty />
         <Programme />
         <Photography />
-        <ZoomMeeting />
-        <UnableToJoin />
-        <Gallery />
         <Appreciation />
+        <Gifts />
+        <Gallery />
         <RSVP />
         <footer className="flex flex-col items-center justify-between gap-4 bg-ink px-[6vw] py-8 text-center text-[0.7rem] text-cream md:flex-row md:px-[4vw] md:text-left">
           <Heart size={17} fill="currentColor" className="hidden md:block" />
