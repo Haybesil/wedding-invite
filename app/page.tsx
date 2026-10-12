@@ -306,7 +306,9 @@ function GalleryArea() {
           </button>
           <span>
             {String(index + 1).padStart(2, "0")}{" "}
-            <b className="font-normal">/ {String(images.length).padStart(2, "0")}</b>
+            <b className="font-normal">
+              / {String(images.length).padStart(2, "0")}
+            </b>
           </span>
           <button
             type="button"
@@ -474,11 +476,7 @@ function Ceremony() {
   );
 }
 
-function PartyMember({
-  person,
-}: {
-  person: (typeof bridalParty)[number];
-}) {
+function PartyMember({ person }: { person: (typeof bridalParty)[number] }) {
   const initials =
     person.name === "Still to be announced"
       ? "—"
@@ -745,7 +743,7 @@ function UnableToJoin() {
     <section className="grid items-stretch md:grid-cols-2">
       <div className="relative min-h-[105vw] md:min-h-[600px]">
         <Image
-          src='/ikoyi-bridge.jpg'
+          src="/ikoyi-bridge.jpg"
           alt="Ikoyi Bridge"
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
@@ -766,12 +764,12 @@ function UnableToJoin() {
           as we say “I do” and share in this special moment from wherever you
           are.
         </p>
-        <a
+        {/* <a
           className="inline-flex w-fit items-center justify-center gap-2.5 bg-ink px-5.5 py-4 text-[0.68rem] uppercase tracking-[0.14em] text-cream no-underline"
           href="#rsvp"
         >
           View joining details <ArrowRight size={16} />
-        </a>
+        </a> */}
       </div>
     </section>
   );
@@ -845,18 +843,43 @@ function Appreciation() {
         A note of appreciation
       </p>
       <h2 className="mb-8 font-serif text-[clamp(2.6rem,6vw,4.8rem)] leading-[1.05] font-normal tracking-[-0.03em] text-wine">
-        With Grateful Hearts
+        Seun & Benjamin
       </h2>
       <p className="mx-auto mb-6 max-w-2xl text-[1.05rem] leading-8 text-foreground md:text-lg">
         We are truly grateful to Jehovah for making this beautiful day possible.
         We also appreciate our family and friends for their love, support, good
         wishes, journeying down here and tuning in online.
       </p>
-      <p className="mx-auto mb-10 max-w-2xl text-[1.05rem] leading-8 text-foreground md:text-lg">
+      <p className="mx-auto max-w-2xl text-[1.05rem] leading-8 text-foreground md:text-lg">
         Thank you for being part of our joy. ❤️
       </p>
-      <p className="font-serif text-2xl text-wine italic">
-        With love, Seun & Benjamin
+      <p className="mx-auto mb-10 max-w-2xl text-[1.05rem] leading-8 text-foreground md:text-lg">
+        Nov. 5, 2026. Lagos, Nigeria
+      </p>
+
+      <p className="font-serif text-2xl text-wine italic"> #benspleasantness</p>
+    </section>
+  );
+}
+
+function Thanks() {
+  return (
+    <section className="bg-cream px-[8vw] py-[20vw] text-center md:px-[18vw] md:py-[12vw]">
+      <p className="mb-6 text-[0.68rem] uppercase tracking-[0.28em] text-wine">
+        A note on reception
+      </p>
+      <h2 className="mb-8 font-serif text-[clamp(2.6rem,6vw,4.8rem)] leading-[1.05] font-normal tracking-[-0.03em] text-wine">
+        With Grateful Hearts
+      </h2>
+      <p className="mx-auto mb-6 max-w-2xl text-[1.05rem] leading-8 text-foreground md:text-lg">
+        We truly we could host every one of you at a grand reception. At this
+        time, we humbly invite you to share in the provision we have made -
+        light refreshments will be thoroughly arranged after the ceremony at the
+        Kingdom Hall.
+      </p>
+      <p className="mx-auto mb-10 max-w-2xl text-[1.05rem] leading-8 text-foreground md:text-lg">
+        Your presence means the world to us - and that, above all, is what we
+        cherish most.
       </p>
     </section>
   );
@@ -1073,9 +1096,10 @@ export default function Page() {
         <Details />
         <UnableToJoin />
         <ZoomMeeting />
-        <Theme />
         <Ceremony />
         <BridalParty />
+        <Theme />
+        <Thanks />
         <Programme />
         <Photography />
         <Appreciation />
