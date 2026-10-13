@@ -28,13 +28,13 @@ import {
 const navItems = [
   "Invitation",
   "Details",
-  "Theme",
   "Ceremony",
+  "Zoom",
+  "Theme",
   "Bridal party",
   "Photographs",
   "Gifts",
-  "Zoom",
-  "RSVP",
+  // "RSVP",
 ];
 
 function Countdown() {
@@ -176,7 +176,7 @@ function Header({ onMenu }: { onMenu: () => void }) {
       </nav>
       <button
         aria-label="Open menu"
-        className="border-0 bg-transparent text-inherit lg:hidden"
+        className="border-0 bg-transparent text-inherit lg:hidden cursor-pointer"
         onClick={onMenu}
       >
         <Menu size={22} />
