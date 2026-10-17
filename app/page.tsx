@@ -37,42 +37,88 @@ const navItems = [
   // "RSVP",
 ];
 
+// function Countdown() {
+//   const target = new Date("2026-11-05T11:00:00+01:00").getTime();
+//   const [now, setNow] = useState(Date.now());
+//   useEffect(() => {
+//     const timer = setInterval(() => setNow(Date.now()), 1000);
+//     return () => clearInterval(timer);
+//   }, []);
+//   const values = useMemo(() => {
+//     const diff = Math.max(0, target - (now ?? target));
+//     return [
+//       Math.floor(diff / 86400000),
+//       Math.floor(diff / 3600000) % 24,
+//       Math.floor(diff / 60000) % 60,
+//       Math.floor(diff / 1000) % 60,
+//     ];
+//   }, [now, target]);
+//   return (
+//     <div
+//       className="mt-10 flex justify-center gap-1.5 md:gap-2"
+//       aria-label="Countdown to the wedding"
+//     >
+//       {[
+//         [values[0], "Days"],
+//         [values[1], "Hours"],
+//         [values[2], "Minutes"],
+//         [values[3], "Seconds"],
+//       ].map(([value, label]) => (
+//         <div
+//           key={String(label)}
+//           className="grid min-w-[4.4rem] rounded-[0.55rem] border border-white/30 bg-wine/30 px-1.5 py-2.5 backdrop-blur-[5px] md:min-w-[5.8rem] md:px-2.5 md:py-3.5"
+//         >
+//           <strong
+//             className="font-serif text-[1.55rem] font-normal md:text-[2rem]"
+//             suppressHydrationWarning
+//           >
+//             {String(value).padStart(2, "0")}
+//           </strong>
+//           <span className="text-[0.47rem] uppercase tracking-[0.1em] text-lilac md:text-[0.58rem] md:tracking-[0.18em]">
+//             {label}
+//           </span>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
+const TARGET = new Date("2026-11-05T11:00:00+01:00").getTime();
+
 function Countdown() {
-  const target = new Date("2026-11-05T11:00:00+01:00").getTime();
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState<number | null>(null);
+
   useEffect(() => {
+    setNow(Date.now()); // set immediately on mount
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
   }, []);
+
   const values = useMemo(() => {
-    const diff = Math.max(0, target - (now ?? target));
+    if (now === null) return null;
+    const diff = Math.max(0, TARGET - now);
     return [
       Math.floor(diff / 86400000),
       Math.floor(diff / 3600000) % 24,
       Math.floor(diff / 60000) % 60,
       Math.floor(diff / 1000) % 60,
     ];
-  }, [now, target]);
+  }, [now]);
+
+  const labels = ["Days", "Hours", "Minutes", "Seconds"];
+
   return (
     <div
       className="mt-10 flex justify-center gap-1.5 md:gap-2"
       aria-label="Countdown to the wedding"
     >
-      {[
-        [values[0], "Days"],
-        [values[1], "Hours"],
-        [values[2], "Minutes"],
-        [values[3], "Seconds"],
-      ].map(([value, label]) => (
+      {labels.map((label, i) => (
         <div
-          key={String(label)}
+          key={label}
           className="grid min-w-[4.4rem] rounded-[0.55rem] border border-white/30 bg-wine/30 px-1.5 py-2.5 backdrop-blur-[5px] md:min-w-[5.8rem] md:px-2.5 md:py-3.5"
         >
-          <strong
-            className="font-serif text-[1.55rem] font-normal md:text-[2rem]"
-            suppressHydrationWarning
-          >
-            {String(value).padStart(2, "0")}
+          <strong className="font-serif text-[1.55rem] font-normal md:text-[2rem]">
+            {values ? String(values[i]).padStart(2, "0") : "--"}
           </strong>
           <span className="text-[0.47rem] uppercase tracking-[0.1em] text-lilac md:text-[0.58rem] md:tracking-[0.18em]">
             {label}
